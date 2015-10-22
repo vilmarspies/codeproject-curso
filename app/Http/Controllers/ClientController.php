@@ -5,7 +5,7 @@ namespace CodeProject\Http\Controllers;
 use Illuminate\Http\Request;
 use CodeProject\Http\Requests;
 use CodeProject\Http\Controllers\Controller;
-use CodeProject\Models\Client;
+use CodeProject\Entities\Client;
 
 class ClientController extends Controller
 {
