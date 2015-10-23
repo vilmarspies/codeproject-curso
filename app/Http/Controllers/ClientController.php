@@ -3,12 +3,31 @@
 namespace CodeProject\Http\Controllers;
 
 use Illuminate\Http\Request;
-use CodeProject\Http\Requests;
-use CodeProject\Http\Controllers\Controller;
-use CodeProject\Entities\Client;
+//use CodeProject\Http\Requests;
+//use CodeProject\Http\Controllers\Controller;
+use CodeProject\Repositories\IClientRepository;
+use CodeProject\Services\ClientService;
 
 class ClientController extends Controller
 {
+    /**
+    *   @var IClientRepository
+    */
+    private $repository;
+
+    /**
+    *   @var ClientService
+    */
+    private $service;
+
+    /**
+    * @param IClientRepository $repository
+    * @param ClientService $service
+    */
+    function __construct(IClientRepository $repository, ClientService $service) {
+        $this->repository = $repository;
+        $this->service = $service;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +35,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        return Client::all();
+        return $this->repository->all();
     }
 
 
@@ -28,7 +47,7 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        return Client::create($request->all());
+        return $this->service->create($request->all());
     }
 
     /**
@@ -39,7 +58,7 @@ class ClientController extends Controller
      */
     public function show($id)
     {
-        return Client::find($id);
+        return $this->repository->find($id);
     }
 
 
@@ -52,8 +71,9 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Client::find($id)->update($request->all());
-        return Client::find($id);
+        
+        $this->repository->find($id)->update($request->all());
+        return $this->repository->find($id);
     }
 
     /**
@@ -64,6 +84,6 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        Client::find($id)->delete();
+        $this->repository->find($id)->delete();
     }
 }

@@ -2,9 +2,14 @@
 
 namespace CodeProject\Repositories;
 
-use Prettus\Repository\Eloquent\BaseRepository
+use CodeProject\Entities\Client;
+use Prettus\Repository\Eloquent\BaseRepository;
 
-class ClientRepositoryEloquent extends BaseRepository
+class ClientRepositoryEloquent extends BaseRepository implements IClientRepository
 {
 
+	public function model()
+	{
+		return Client::class;
+	}
 }

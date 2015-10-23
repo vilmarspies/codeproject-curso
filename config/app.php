@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'America/Sao_Paulo',
 
     /*
     |--------------------------------------------------------------------------
@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'pt-BR',
 
     /*
     |--------------------------------------------------------------------------
@@ -138,6 +138,8 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
+
+        CodeProject\Providers\CodeProjectRepositoryProvider::class,
 
         /*
          * Application Service Providers...
