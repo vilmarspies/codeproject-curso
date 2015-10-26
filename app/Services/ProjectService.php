@@ -1,37 +1,37 @@
 <?php
 	namespace CodeProject\Services;
 
-use CodeProject\Repositories\IClientRepository;
-use CodeProject\Validators\ClientValidator;
+use CodeProject\Repositories\IProjectRepository;
+use CodeProject\Validators\ProjectValidator;
 use Prettus\Validator\Exceptions\ValidatorException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class ClientService
+class ProjectService
 {
 	/**
-	* @var IClientRepository
+	* @var IProjectRepository
 	*/
 	protected $repository;
 
 	/**
-	* @var ClientValidator
+	* @var ProjectValidator
 	*/
 	protected $validator;
 
 	/**
 	*
 	*/
-	function __construct(IClientRepository $repository, ClientValidator $validator) {
+	function __construct(IProjectRepository $repository, ProjectValidator $validator) {
 		$this->repository = $repository;
 		$this->validator = $validator;
 	}
 
 	public function all()
-	{
-		return $this->repository->all();
-	}
+    {
+        return $this->repository->with(['owner','client'])->all();
+    }
 
-	public function create(array $data)
+	public function store(array $data)
 	{
 	
 		try {
@@ -46,17 +46,6 @@ class ClientService
 		
 	}
 
-	public function show($id)
-    {
-    	try {
-    		return $this->repository->find($id);
-    	} catch (ModelNotFoundException $e) {
-    		return [ 'error' => true,
-    			'message' => 'Cliente não encontrado'];
-    	}
-        
-    }
-
 	public function update(array $data, $id)
 	{
 		try {
@@ -70,19 +59,30 @@ class ClientService
 		} catch (ModelNotFoundException $e) {
             return [
                 'error' => true,
-                'message' => 'Cliente não encontrado.'
+                'message' => 'Projeto não encontrado.'
             ];
         }
 	}
+
+	public function show($id)
+    {
+    	try {
+    		return $this->repository->with(['owner','client'])->find($id);
+    	} catch (ModelNotFoundException $e) {
+    		return [ 'error' => true,
+    			'message' => 'Projeto não encontrado'];
+    	}
+        
+    }
 
 	public function destroy($id)
     {
     	try {
     		$this->repository->find($id);
     		$this->repository->delete($id);    		
-    		return ['message'=>'Cliente removido com sucesso'];
+    		return ['message'=>'Projeto removido com sucesso'];
     	} catch (ModelNotFoundException $e) {
-    		return [ 'error' => true,'message' => 'Cliente não encontrado'];
+    		return [ 'error' => true,'message' => 'Projeto não encontrado'];
     	}
         
     }
