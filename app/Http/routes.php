@@ -20,6 +20,9 @@ Route::get('client/{id}', 'ClientController@show');
 Route::delete('client/{id}', 'ClientController@destroy');
 Route::put('client/{id}', 'ClientController@update');
 
+Route::get('project/{id}/note', 'ProjectNoteController@index');
+Route::post('project/{id}/note/{noteId}', 'ProjectNoteController@show');
+
 Route::get('project', 'ProjectController@index');
 Route::post('project', 'ProjectController@store');
 Route::get('project/{id}', 'ProjectController@show');

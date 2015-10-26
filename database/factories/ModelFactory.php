@@ -40,6 +40,13 @@ $factory->define(CodeProject\Entities\Project::class, function (Faker\Generator 
         'progress' => $faker->word,
         'status' => $faker->word,
         'due_date'   => $faker->date,
+    ];
+});
 
+$factory->define(CodeProject\Entities\ProjectNote::class, function (Faker\Generator $faker) {
+    return [
+        'project_id' => $faker->numberBetween(1,5),
+        'title' => $faker->word,
+        'note' => $faker->paragraph,
     ];
 });
