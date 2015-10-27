@@ -33,13 +33,17 @@ $factory->define(CodeProject\Entities\Client::class, function (Faker\Generator $
 
 $factory->define(CodeProject\Entities\Project::class, function (Faker\Generator $faker) {
     return [
-        'owner_id' => $faker->numberBetween(1,5),
-        'client_id' => $faker->numberBetween(1,10),
-        'name' => $faker->name,
+        //'owner_id' => $faker->numberBetween(1,5),
+       // 'client_id' => $faker->numberBetween(1,10),
+        'owner_id' => rand(1,5),
+        'client_id' => rand(1,10),
+        'name' => $faker->word,
         'description' => $faker->sentence,
-        'progress' => $faker->word,
-        'status' => $faker->word,
-        'due_date'   => $faker->date,
+        //'progress' => $faker->word,
+        'progress' => rand(1,100),
+       // 'status' => $faker->word,
+        'status' => rand(1,3),
+        'due_date'   => $faker->dateTime('now')
 
     ];
 });
