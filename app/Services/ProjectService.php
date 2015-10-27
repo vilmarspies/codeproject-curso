@@ -92,7 +92,7 @@ class ProjectService
     	try {
     		return $this->repository->find($id)->members;
     	} catch (ModelNotFoundException $e) {
-    		return [ 'error' => true,'message' => 'Projeto não possui colaboradores'];
+    		return [ 'error' => true,'message' => 'Projeto não localizado'];
     	}
     }
 
