@@ -86,4 +86,65 @@ class ProjectService
     	}
         
     }
+
+    public function members($id)
+    {
+    	try {
+    		return $this->repository->find($id)->members;
+    	} catch (ModelNotFoundException $e) {
+    		return [ 'error' => true,'message' => 'Projeto não possui colaboradores'];
+    	}
+    }
+
+    public function addMember($projectId, $userId)
+    {
+        try {
+
+        	if ($this->repository->find($projectId)->members()->find($userId))
+        		return ['success'=>false,'message'=>'membro já faz parte do projeto'];
+
+            $this->repository->find($projectId)->members()->attach($userId);
+            return ['success'=>true,'message'=>'membro adicionado ao projeto'];
+
+        } catch (ModelNotFoundException $e) {
+    		return [
+    			'error'=>true,
+    			'message'=>'Projeto não localizado'
+    		];
+    	}
+    }
+
+    public function removeMember($projectId, $userId)
+    {
+		try {
+       		if ($this->repository->find($projectId)->members()->find($userId)) 
+       		{
+       			$this->repository->find($projectId)->members()->detach($userId);
+       			return ['success'=>true,'message'=>'membro removido do projeto'];
+       		}
+       		return ['success'=>false,'message'=>'membro não faz parte do projeto'];
+
+       	} catch (ModelNotFoundException $e) {
+    		return [
+    			'error'=>true,
+    			'message'=>'Projeto não localizado'
+    		];
+    	}
+    }
+
+    public function isMember($projectId, $userId)
+    {
+    	try {
+    		if ($this->repository->find($projectId)->members()->find($userId))
+    			return ['success'=>true,'message' => 'Usuario faz parte do projeto'];
+    		return ['success'=>false,'message'=>'Usuario não faz parte do projeto'];
+
+    	} catch (ModelNotFoundException $e) {
+    		return [
+    			'error'=>true,
+    			'message'=>'Projeto não localizado'
+    		];
+    	}
+        
+    }
 }

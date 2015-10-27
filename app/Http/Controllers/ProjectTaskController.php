@@ -3,18 +3,18 @@
 namespace CodeProject\Http\Controllers;
 
 use Illuminate\Http\Request;
-//use CodeProject\Http\Requests;
-//use CodeProject\Http\Controllers\Controller;
-use CodeProject\Services\ProjectService;
+use CodeProject\Http\Requests;
+use CodeProject\Http\Controllers\Controller;
 
-class ProjectController extends Controller
-{
-    /**
+use CodeProject\Services\ProjectTaskService;
+
+class ProjectTaskController extends Controller
+{ /**
     *   @var ProjectService
     */
     private $service;
 
-    function __construct(ProjectService $service) {
+    function __construct(ProjectTaskService $service) {
         $this->service = $service;
     }
     /**
@@ -22,9 +22,9 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        return $this->service->all();
+        return $this->service->all($id);
     }
 
     /**
@@ -44,9 +44,9 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, $taskId)
     {
-        return $this->service->show($id);
+        return $this->service->show($id, $taskId);
     }
 
 
@@ -57,9 +57,9 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, $taskId)
     {
-        return $this->service->update($request->all(), $id);
+        return $this->service->update($request->all(), $taskId);
     }
 
     /**
@@ -68,28 +68,8 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, $taskId)
     {
-        return $this->service->destroy($id);
-    }
-
-    public function members($id)
-    {
-       return $this->service->members($id);
-    }
-
-    public function addMember(Request $request, $projectId)
-    {
-        return $this->service->addMember($projectId, $request->get('user_id'));
-    }
-
-    public function removeMember($projectId, $userId)
-    {
-       return $this->service->removeMember($projectId, $userId);
-    }
-
-    public function isMember($projectId, $userId)
-    {
-        return $this->service->isMember($projectId, $userId);
+        return $this->service->destroy($taskId);
     }
 }

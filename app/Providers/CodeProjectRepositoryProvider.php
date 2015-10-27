@@ -8,6 +8,12 @@ use CodeProject\Repositories\IClientRepository;
 use CodeProject\Repositories\ProjectRepositoryEloquent;
 use CodeProject\Repositories\IProjectRepository;
 
+use CodeProject\Repositories\ProjectNoteRepositoryEloquent;
+use CodeProject\Repositories\IProjectNoteRepository;
+
+use CodeProject\Repositories\ProjectTaskRepositoryEloquent;
+use CodeProject\Repositories\IProjectTaskRepository;
+
 use Illuminate\Support\ServiceProvider;
 
 class CodeProjectRepositoryProvider extends ServiceProvider
@@ -31,5 +37,7 @@ class CodeProjectRepositoryProvider extends ServiceProvider
     {
         $this->app->bind(IClientRepository::class, ClientRepositoryEloquent::class);
         $this->app->bind(IProjectRepository::class, ProjectRepositoryEloquent::class);
+        $this->app->bind(IProjectNoteRepository::class, ProjectNoteRepositoryEloquent::class);
+        $this->app->bind(IProjectTaskRepository::class, ProjectTaskRepositoryEloquent::class);
     }
 }

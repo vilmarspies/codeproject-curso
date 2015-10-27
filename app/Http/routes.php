@@ -20,6 +20,23 @@ Route::get('client/{id}', 'ClientController@show');
 Route::delete('client/{id}', 'ClientController@destroy');
 Route::put('client/{id}', 'ClientController@update');
 
+Route::get('project/{id}/note', 'ProjectNoteController@index');
+Route::get('project/{id}/note/{noteId}', 'ProjectNoteController@show');
+Route::post('project/{id}/note', 'ProjectNoteController@store');
+Route::put('project/{id}/note/{noteId}', 'ProjectNoteController@update');
+Route::delete('project/{id}/note/{noteId}', 'ProjectNoteController@destroy');
+
+Route::get('project/{id}/task', 'ProjectTaskController@index');
+Route::get('project/{id}/task/{taskId}', 'ProjectTaskController@show');
+Route::post('project/{id}/task', 'ProjectTaskController@store');
+Route::put('project/{id}/task/{taskId}', 'ProjectTaskController@update');
+Route::delete('project/{id}/task/{taskId}', 'ProjectTaskController@destroy');
+
+Route::get('/project/{id}/members', 'ProjectController@members');
+Route::get('/project/{id}/member/{userId}', 'ProjectController@isMember');
+Route::post('/project/{id}/member', 'ProjectController@addMember');
+Route::delete('/project/{id}/member/{userId}', 'ProjectController@removeMember');
+
 Route::get('project', 'ProjectController@index');
 Route::post('project', 'ProjectController@store');
 Route::get('project/{id}', 'ProjectController@show');
