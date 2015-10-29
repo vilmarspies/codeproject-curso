@@ -18,7 +18,7 @@ return [
     |
     | Your OAuth2 Server can issue an access token based on different grant
     | types you can even provide your own grant type.
-    |
+    |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
     | To choose which grant type suits your scenario, see
     | http://oauth2.thephpleague.com/authorization-server/which-grant
     |
@@ -28,9 +28,16 @@ return [
     */
 
     'grant_types' => [
-        'class'    => '\League\OAuth2\Server\Grant\PasswordGrant',
-        'callback' => '\CodeProject\OAuth\Verifier@verify',
-        'access_token_ttl' => 3600
+                'password' => [                                                                                                                                                                                                                                                                                                                                                                                                                         
+                    'class'    => '\League\OAuth2\Server\Grant\PasswordGrant',
+                    'callback' => '\CodeProject\OAuth\Verifier@verify',
+                    'access_token_ttl' => 3600
+                ],
+                'refresh_token' => [
+                    'class' => '\League\OAuth2\Server\Grant\RefreshTokenGrant',
+                    'access_token_ttl' => 3600,
+                    'refresh_token_ttl' => 36000
+                ]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
 
     ],
 
