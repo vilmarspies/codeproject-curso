@@ -20,17 +20,20 @@ class ProjectService
 	*/
 	protected $validator;
 
+    private $userId;
+
 	/**
 	*
 	*/
 	function __construct(IProjectRepository $repository, ProjectValidator $validator) {
 		$this->repository = $repository;
 		$this->validator = $validator;
+        $this->userId = Authorizer::getResourceOwnerId();
 	}
 
 	public function all()
     {
-        return $this->repository->with(['owner','client'])->all();
+        return $this->repository->with(['owner','client'])->findWhere(['owner_id'=>Authorizer::getResourceOwnerId()]);
     }
 
 	public function store(array $data)
@@ -68,20 +71,17 @@ class ProjectService
 
 	public function show($id)
     {
-        $userId = Authorizer::getResourceOwnerId();
-
-
-
-        if($this->repository->isOwner($id, $userId))
+        if (!$this->repository->isOwner($id, $this->userId))
         {
-        	try {
-        		return $this->repository->with(['owner','client'])->find($id);
-        	} catch (ModelNotFoundException $e) {
-        		return [ 'error' => true,
-        			'message' => 'Projeto não encontrado'];
-        	}
+            return ['success'=>false,'message'=>'Sem permissão para acessar o projeto'];
         }
-        return ['success'=>false,'message'=>'Sem permissão para acessar o projeto'];
+        try {
+            return $this->repository->with(['owner','client'])->find($id);
+        } catch (ModelNotFoundException $e) {
+            return [ 'error' => true,
+                'message' => 'Projeto não encontrado'];
+        }
+        
     }
 
 	public function destroy($id)
@@ -155,5 +155,15 @@ class ProjectService
     		];
     	}
         
+    }
+
+    private function checkProjectOwner($projectId)
+    {
+        $userId = Authorizer::getResourceOwnerId();
+
+        if(!$this->repository->isOwner($id, $userId))
+        {
+            return ['success'=>false,'message'=>'Sem permissão para acessar o projeto'];
+        }
     }
 }
