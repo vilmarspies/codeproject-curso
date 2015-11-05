@@ -6,6 +6,8 @@ use CodeProject\Validators\ProjectValidator;
 use Prettus\Validator\Exceptions\ValidatorException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
+use LucaDegasperi\OAuth2Server\Facades\Authorizer;
+
 class ProjectService
 {
 	/**
@@ -66,13 +68,20 @@ class ProjectService
 
 	public function show($id)
     {
-    	try {
-    		return $this->repository->with(['owner','client'])->find($id);
-    	} catch (ModelNotFoundException $e) {
-    		return [ 'error' => true,
-    			'message' => 'Projeto não encontrado'];
-    	}
-        
+        $userId = Authorizer::getResourceOwnerId();
+
+
+
+        if($this->repository->isOwner($id, $userId))
+        {
+        	try {
+        		return $this->repository->with(['owner','client'])->find($id);
+        	} catch (ModelNotFoundException $e) {
+        		return [ 'error' => true,
+        			'message' => 'Projeto não encontrado'];
+        	}
+        }
+        return ['success'=>false,'message'=>'Sem permissão para acessar o projeto'];
     }
 
 	public function destroy($id)
