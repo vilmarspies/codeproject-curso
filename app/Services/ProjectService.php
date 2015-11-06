@@ -71,7 +71,7 @@ class ProjectService
 
 	public function show($id)
     {
-        if (!$this->repository->isOwner($id, $this->userId))
+        if (!$this->checkProjectPermissions($id))
         {
             return ['success'=>false,'message'=>'Sem permissão para acessar o projeto'];
         }
@@ -105,14 +105,14 @@ class ProjectService
     	}
     }
 
-    public function addMember($projectId, $userId)
+    public function addMember($projectId, $memberId)
     {
         try {
 
-        	if ($this->repository->find($projectId)->members()->find($userId))
+        	if ($this->repository->find($projectId)->members()->find($memberId))
         		return ['success'=>false,'message'=>'membro já faz parte do projeto'];
 
-            $this->repository->find($projectId)->members()->attach($userId);
+            $this->repository->find($projectId)->members()->attach($memberId);
             return ['success'=>true,'message'=>'membro adicionado ao projeto'];
 
         } catch (ModelNotFoundException $e) {
@@ -123,12 +123,12 @@ class ProjectService
     	}
     }
 
-    public function removeMember($projectId, $userId)
+    public function removeMember($projectId, $memberId)
     {
 		try {
-       		if ($this->repository->find($projectId)->members()->find($userId)) 
+       		if ($this->repository->find($projectId)->members()->find($memberId)) 
        		{
-       			$this->repository->find($projectId)->members()->detach($userId);
+       			$this->repository->find($projectId)->members()->detach($memberId);
        			return ['success'=>true,'message'=>'membro removido do projeto'];
        		}
        		return ['success'=>false,'message'=>'membro não faz parte do projeto'];
@@ -141,10 +141,10 @@ class ProjectService
     	}
     }
 
-    public function isMember($projectId, $userId)
+    public function isMember($projectId, $memberId)
     {
     	try {
-    		if ($this->repository->find($projectId)->members()->find($userId))
+    		if ($this->repository->find($projectId)->members()->find($memberId))
     			return ['success'=>true,'message' => 'Usuario faz parte do projeto'];
     		return ['success'=>false,'message'=>'Usuario não faz parte do projeto'];
 
@@ -165,5 +165,13 @@ class ProjectService
         {
             return ['success'=>false,'message'=>'Sem permissão para acessar o projeto'];
         }
+    }
+
+    public function checkProjectPermissions($projectId)
+    {
+        $userId = Authorizer::getResourceOwnerId();
+        if ($this->repository->isOwner($projectId, $userId) or $this->repository->hasMember($projectId, $userId))
+            return true;
+        return false;
     }
 }

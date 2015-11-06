@@ -38,4 +38,11 @@ class ProjectRepositoryEloquent extends BaseRepository implements IProjectReposi
 
     	return false;
     }
+
+    public function hasMember($projectId, $memberId)
+    {
+        if($this->find($projectId)->members()->find($memberId))
+            return true;
+        return false;
+    }
 }
