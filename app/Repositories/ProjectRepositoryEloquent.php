@@ -3,6 +3,7 @@
 namespace CodeProject\Repositories;
 
 use CodeProject\Entities\Project;
+use CodeProject\Presenters\ProjectPresenter;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 
@@ -44,5 +45,10 @@ class ProjectRepositoryEloquent extends BaseRepository implements IProjectReposi
         if($this->find($projectId)->members()->find($memberId))
             return true;
         return false;
+    }
+
+    public function presenter()
+    {
+        return ProjectPresenter::class;
     }
 }
