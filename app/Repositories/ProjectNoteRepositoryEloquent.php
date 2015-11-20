@@ -7,6 +7,7 @@ use Prettus\Repository\Criteria\RequestCriteria;
 
 use CodeProject\Repositories\IProjectNoteRepository;
 use CodeProject\Entities\ProjectNote;
+use CodeProject\Presenters\ProjectNotePresenter;
 
 /**
  * Class ProjectNoteRepositoryEloquent
@@ -30,5 +31,10 @@ class ProjectNoteRepositoryEloquent extends BaseRepository implements IProjectNo
     public function boot()
     {
         $this->pushCriteria(app(RequestCriteria::class));
+    }
+
+    public function presenter()
+    {
+        return ProjectNotePresenter::class;
     }
 }

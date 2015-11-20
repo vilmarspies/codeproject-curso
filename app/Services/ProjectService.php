@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 
+
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Contracts\Filesystem\Factory as Storage;
+
 class ProjectService
 {
 	/**
@@ -20,14 +24,27 @@ class ProjectService
 	*/
 	protected $validator;
 
+    /**
+    * @var Filesystem
+    */
+    protected $filesystem;
+
+    /**
+    * @var Storage
+    */
+    protected $storage;
+
     private $userId;
 
 	/**
 	*
 	*/
-	function __construct(IProjectRepository $repository, ProjectValidator $validator) {
+	function __construct(IProjectRepository $repository, ProjectValidator $validator, Filesystem $filesystem, Storage $storage) {
 		$this->repository = $repository;
 		$this->validator = $validator;
+        $this->filesystem = $filesystem;
+        $this->storage = $storage;
+
         $this->userId = Authorizer::getResourceOwnerId();
 	}
 
@@ -86,14 +103,46 @@ class ProjectService
 
 	public function destroy($id)
     {
+        if(!$this->checkProjectOwner($id))
+        {
+            return ['error' => 'Access Forbidden'];
+        }
     	try {
-    		$this->repository->find($id);
-    		$this->repository->delete($id);    		
+    		$this->repository->skipPresenter()->find($id)->delete($id);    		
     		return ['message'=>'Projeto removido com sucesso'];
     	} catch (ModelNotFoundException $e) {
     		return [ 'error' => true,'message' => 'Projeto não encontrado'];
     	}
         
+    }
+
+    public function createFile(array $data)
+    {
+        try{
+            $project = $this->repository->skipPresenter()->find($data['project_id']);
+            $projectFile = $project->files()->create($data);
+
+            $this->storage->put($projectFile->id.".".$data['extension'], $this->filesystem->get($data['file']));
+        } catch (ModelNotFoundException $e) {
+            return [ 'error' => true,'message' => 'Projeto não localizado'];
+        }
+        
+    }
+
+    public function deleteFile($projectId, $fileId)
+    {
+        try {
+            if ($this->repository->skipPresenter()->find($projectId)->files()->find($fileId)) {
+                $file = $this->repository->skipPresenter()->find($projectId)->files()->find($fileId);
+                $this->repository->skipPresenter()->find($projectId)->files()->delete($fileId);
+                $this->storage->delete($file->id.'.'.$file->extension);
+            }
+            else{
+                return [ 'error' => true,'message' => 'File não localizado'];
+            }        
+        } catch (ModelNotFoundException $e) {
+            return [ 'error' => true,'message' => 'Projeto não localizado'];
+        }
     }
 
     public function members($id)
@@ -109,10 +158,10 @@ class ProjectService
     {
         try {
 
-        	if ($this->repository->find($projectId)->members()->find($memberId))
+        	if ($this->repository->skipPresenter()->find($projectId)->members()->find($memberId))
         		return ['success'=>false,'message'=>'membro já faz parte do projeto'];
 
-            $this->repository->find($projectId)->members()->attach($memberId);
+            $this->repository->skipPresenter()->find($projectId)->members()->attach($memberId);
             return ['success'=>true,'message'=>'membro adicionado ao projeto'];
 
         } catch (ModelNotFoundException $e) {
@@ -126,9 +175,9 @@ class ProjectService
     public function removeMember($projectId, $memberId)
     {
 		try {
-       		if ($this->repository->find($projectId)->members()->find($memberId)) 
+       		if ($this->repository->skipPresenter()->find($projectId)->members()->find($memberId)) 
        		{
-       			$this->repository->find($projectId)->members()->detach($memberId);
+       			$this->repository->skipPresenter()->find($projectId)->members()->detach($memberId);
        			return ['success'=>true,'message'=>'membro removido do projeto'];
        		}
        		return ['success'=>false,'message'=>'membro não faz parte do projeto'];
@@ -144,7 +193,7 @@ class ProjectService
     public function isMember($projectId, $memberId)
     {
     	try {
-    		if ($this->repository->find($projectId)->members()->find($memberId))
+    		if ($this->repository->skipPresenter()->find($projectId)->members()->find($memberId))
     			return ['success'=>true,'message' => 'Usuario faz parte do projeto'];
     		return ['success'=>false,'message'=>'Usuario não faz parte do projeto'];
 

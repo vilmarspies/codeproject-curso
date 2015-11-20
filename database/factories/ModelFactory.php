@@ -20,6 +20,14 @@ $factory->define(CodeProject\Entities\User::class, function (Faker\Generator $fa
     ];
 });
 
+$factory->define(CodeProject\Entities\OAuthClient::class, function (Faker\Generator $faker) {
+    return [
+        'id' => $faker->word,
+        'secret' => str_random(10),
+        'name' => $faker->word,
+    ];
+});
+
 $factory->define(CodeProject\Entities\Client::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
