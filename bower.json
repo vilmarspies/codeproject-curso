@@ -1,0 +1,31 @@
+{
+  "name": "codeproject-curso",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Vilmar Spies <vilmarspies@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/vilmarspies/codeproject-curso",
+  "moduleType": [
+    "amd"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "resources/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "1.4.1",
+    "angular-route": "1.4.1",
+    "angular-resource": "1.4.1",
+    "angular-animate": "1.4.1",
+    "angular-messages": "1.4.1",
+    "angular-bootstrap": "0.13.0",
+    "angular-strap": "2.2.4",
+    "bootstrap": "3.3.5"
+  }
+}
