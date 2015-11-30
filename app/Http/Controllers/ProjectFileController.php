@@ -34,6 +34,22 @@ class ProjectFileController extends Controller
      */
     public function store(Request $request, $id)
     {
+        $errors = ['error'=>false];
+        if (is_null($request->file('file'))){
+            $errors['error']=true;
+            $errors['file'] = 'Informe o Arquivo';
+        }
+        if ($request->name == ''){
+            $errors['error']=true;
+            $errors['name']='Informe o Nome';
+        }
+        if ($request->description == ''){
+            $errors['error']=true;
+            $errors['description']='Informe o Description';
+        }
+        if ($errors['error']){
+            return $errors;
+        }
         $file = $request->file('file');
         $data['file'] = $file;
         $data['extension'] = $file->getClientOriginalExtension();
