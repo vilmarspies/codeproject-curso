@@ -74,8 +74,13 @@
 			<script type="text/javascript" src="{{asset('build/assets/js/vendor/angular-messages.min.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/vendor/ui-bootstrap.min.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/vendor/navbar.min.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/vendor/angular-cookies.min.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/vendor/query-string.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/vendor/angular-oauth2.min.js')}}"></script>
 
 			<script type="text/javascript" src="{{asset('build/assets/js/app.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/login.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/home.js')}}"></script>
 	@else
 		<script type="text/javascript" src="{{elixir('assets/js/all.js')}}"></script>
 	@endif

@@ -148,7 +148,7 @@ class ProjectService
     public function members($id)
     {
     	try {
-    		return $this->repository->find($id)->members;
+    		return $this->repository->skipPresenter()->find($id)->members;
     	} catch (ModelNotFoundException $e) {
     		return [ 'error' => true,'message' => 'Projeto não localizado'];
     	}

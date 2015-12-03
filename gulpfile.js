@@ -22,7 +22,10 @@ configCode.vendor_path_js = [
 	configCode.bower_path + '/angular-animate/angular-animate.min.js',
 	configCode.bower_path + '/angular-messages/angular-messages.min.js',
 	configCode.bower_path + '/angular-bootstrap/ui-bootstrap.min.js',
-	configCode.bower_path + '/angular-strap/dist/modules/navbar.min.js'
+	configCode.bower_path + '/angular-strap/dist/modules/navbar.min.js',
+	configCode.bower_path + '/angular-cookies/angular-cookies.min.js',
+	configCode.bower_path + '/query-string/query-string.js',
+	configCode.bower_path + '/angular-oauth2/dist/angular-oauth2.min.js'
 ];
 
 configCode.build_path_css = configCode.build_path+'/css';
