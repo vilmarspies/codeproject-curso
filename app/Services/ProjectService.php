@@ -156,6 +156,13 @@ class ProjectService
 
     public function addMember($projectId, $memberId)
     {
+        if ($this->checkMemberId($memberId))
+        {
+            return ['success'=>false, 'message'=>'Informe o Id do Membro'];
+        }
+        if (!$this->checkProjectOwner($projectId)){
+            return ['success'=>false,'message'=>'Sem permissão para adicionar Membros. Motivo: Voce nao e Owner'];
+        }
         try {
 
         	if ($this->repository->skipPresenter()->find($projectId)->members()->find($memberId))
@@ -174,6 +181,13 @@ class ProjectService
 
     public function removeMember($projectId, $memberId)
     {
+        if ($this->checkMemberId($memberId))
+        {
+            return ['success'=>false, 'message'=>'Informe o Id do Membro'];
+        }
+        if (!$this->checkProjectOwner($projectId)){
+            return ['success'=>false,'message'=>'Sem permissão para remover Membros. Motivo: Voce nao e Owner'];
+        }
 		try {
        		if ($this->repository->skipPresenter()->find($projectId)->members()->find($memberId)) 
        		{
@@ -210,16 +224,25 @@ class ProjectService
     {
         $userId = Authorizer::getResourceOwnerId();
 
-        if(!$this->repository->isOwner($id, $userId))
+        if($this->repository->isOwner($projectId, $userId))
         {
-            return ['success'=>false,'message'=>'Sem permissão para acessar o projeto'];
+            return true; 
         }
+        return false;
     }
 
     public function checkProjectPermissions($projectId)
     {
         $userId = Authorizer::getResourceOwnerId();
+
         if ($this->repository->isOwner($projectId, $userId) or $this->repository->hasMember($projectId, $userId))
+            return true;
+        return false;
+    }
+
+    private function checkMemberId($memberId)
+    {
+        if(is_null($memberId) or $memberId == '' or $memberId == '0')
             return true;
         return false;
     }

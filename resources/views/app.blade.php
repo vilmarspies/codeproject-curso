@@ -9,6 +9,7 @@
 	@if(Config::get('app.debug'))
 		<link rel="stylesheet" type="text/css" href="{{asset('build/assets/css/vendor/bootstrap.min.css')}}">
 		<link rel="stylesheet" type="text/css" href="{{asset('build/assets/css/vendor/bootstrap-theme.min.css')}}">
+		<link rel="stylesheet" type="text/css" href="{{asset('build/assets/css/vendor/font-awesome.min.css')}}">
 	@else
 		<link rel="stylesheet" type="text/css" href="{{elixir('assets/css/all.css')}}">
 	@endif
@@ -79,8 +80,16 @@
 			<script type="text/javascript" src="{{asset('build/assets/js/vendor/angular-oauth2.min.js')}}"></script>
 
 			<script type="text/javascript" src="{{asset('build/assets/js/app.js')}}"></script>
+			
+			<!-- Controllers -->
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/login.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/home.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/client/clientList.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/client/clientNew.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/client/clientEdit.js')}}"></script>
+
+			<!-- SERVICES -->
+			<script type="text/javascript" src="{{asset('build/assets/js/services/client.js')}}"></script>
 	@else
 		<script type="text/javascript" src="{{elixir('assets/js/all.js')}}"></script>
 	@endif
