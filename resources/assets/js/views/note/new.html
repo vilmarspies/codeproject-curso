@@ -1,0 +1,54 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+			<div class="panel panel-default">
+				<div class="panel-heading">Cadastro de Notas de Projetos</div>
+				<div class="panel-body">
+					<div class="alert alert-danger" ng-show="error.error">
+							<strong>Whoops!</strong> Ocorreram erros.<br><br>
+							<div>{{error.message}}</div>
+						</div>
+
+					<form class="form-horizontal" name="formNote" role="form" method="POST" ng-submit="save()">
+
+						<div class="form-group" ng-class="{'has-error':!formNote.project_id.$valid && formNote.project_id.$touched}">
+							<label class="col-md-4 control-label">Project ID:</label>
+							<div class="col-md-6">
+								<input type="text" class="form-control" name="project_id" ng-model="note.project_id" required>
+								<div ng-messages="formNote.project_id.$error" class="help-block" ng-show="formNote.project_id.$touched">
+									<div ng-message="required">Campo obrigatório</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group" ng-class="{'has-error':!formNote.title.$valid && formNote.title.$touched}">
+							<label class="col-md-4 control-label">Title:</label>
+							<div class="col-md-6">
+								<input type="text" class="form-control" name="title" ng-model="note.title" required>
+								<div ng-messages="formNote.title.$error" class="help-block" ng-show="formNote.title.$touched">
+									<div ng-message="required">Campo obrigatório</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group" ng-class="{'has-error':!formNote.note.$valid && formNote.note.$touched}">
+							<label class="col-md-4 control-label">Note:</label>
+							<div class="col-md-6">
+								<input type="text" class="form-control" name="note" ng-model="note.note" required>
+								<div ng-messages="formNote.note.$error" class="help-block" ng-show="formNote.note.$touched">
+									<div ng-message="required">Campo obrigatório</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-md-6 col-md-offset-4">
+								<button type="submit" class="btn btn-primary">Salvar</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

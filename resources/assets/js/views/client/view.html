@@ -1,0 +1,64 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+			<div class="panel panel-default">
+				<div class="panel-heading">Visualização de Cliente</div>
+				<div class="panel-body">
+
+					<form class="form-horizontal" name="formClient" role="form" method="POST" >
+
+						<div class="form-group" >
+							<label class="col-md-4 control-label">Name:</label>
+							<div class="col-md-6">
+								<label class="control-label">{{client.name}}</label>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-4 control-label">Responsible:</label>
+							<div class="col-md-6">
+								<label class="control-label">{{client.responsible}}</label>
+								
+							</div>
+						</div>
+
+						<div class="form-group" >
+							<label class="col-md-4 control-label">E-mail:</label>
+							<div class="col-md-6">
+								<label class="control-label">{{client.email}}</label>
+								
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-4 control-label">Phone:</label>
+							<div class="col-md-6">
+								<label class="control-label">{{client.phone}}</label>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-4 control-label">Address:</label>
+							<div class="col-md-6">
+								<label class="control-label">{{client.address}}</label>
+								
+							</div>
+						</div>
+
+						<div class="form-group" >
+							<label class="col-md-4 control-label">Obs:</label>
+							<div class="col-md-6">
+								<label class="control-label">{{ client.obs}}</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-6 col-md-offset-4">
+								<a ng-href="#/clients/{{client.id}}/edit"><i class="fa fa-pencil"></i>Editar</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

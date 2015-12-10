@@ -34,9 +34,39 @@ app.config(['$routeProvider', 'OAuthProvider', 'OAuthTokenProvider', 'appConfigP
 			templateUrl: 'build/assets/views/client/new.html',
 			controller: 'ClientNewController'
 		})
+		.when('/clients/:id',{
+			templateUrl: 'build/assets/views/client/view.html',
+			controller: 'ClientViewController'
+		})
+		
 		.when('/clients/:id/edit',{
 			templateUrl: 'build/assets/views/client/edit.html',
 			controller: 'ClientEditController'
+		})
+		.when('/clients/:id/remove',{
+			templateUrl: 'build/assets/views/client/remove.html',
+			controller: 'ClientRemoveController'
+		})
+		//ProjectNote LIST
+		.when('/project/:id/notes',{
+			templateUrl: 'build/assets/views/note/list.html',
+			controller: 'ProjectNoteListController'
+		})//ProjectNote NEW
+		.when('/project/:id/notes/new',{
+			templateUrl: 'build/assets/views/note/new.html',
+			controller: 'ProjectNoteNewController'
+		})//ProjectNote SHOW
+		.when('/project/:id/notes/:noteId',{
+			templateUrl: 'build/assets/views/note/show.html',
+			controller: 'ProjectNoteShowController'
+		})//ProjectNote EDIT 
+		.when('/project/:id/notes/:noteId/edit',{
+			templateUrl: 'build/assets/views/note/edit.html',
+			controller: 'ProjectNoteEditController'
+		})//ProjectNote REMOVE
+		.when('/project/:id/notes/:noteId/remove',{
+			templateUrl: 'build/assets/views/note/remove.html',
+			controller: 'ProjectNoteRemoveController'
 		});
 
 		OAuthProvider.configure({

@@ -80,7 +80,7 @@ class ClientService
     	try {
     		$this->repository->find($id);
     		$this->repository->delete($id);    		
-    		return ['message'=>'Cliente removido com sucesso'];
+    		return ['success'=>true,'message'=>'Cliente removido com sucesso'];
     	} catch (ModelNotFoundException $e) {
     		return [ 'error' => true,'message' => 'Cliente não encontrado'];
     	}

@@ -1,0 +1,38 @@
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+			<div class="panel panel-default">
+				<div class="panel-heading">Visualização de Nota de Projeto</div>
+				<div class="panel-body">
+
+					<form class="form-horizontal" name="formNote" role="form" method="POST" >
+
+						<div class="form-group" >
+							<label class="col-md-4 control-label">Title:</label>
+							<div class="col-md-6">
+								<label class="control-label">{{note.title}}</label>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-4 control-label">Note:</label>
+							<div class="col-md-6">
+								<label class="control-label">{{note.note}}</label>
+								
+							</div>
+						</div>
+
+						
+						<div class="form-group">
+							<div class="col-md-6 col-md-offset-4">
+								<a ng-href="#/project/{{note.project_id}}/notes/{{note.id}}/edit"><i class="fa fa-pencil"></i> Editar</a> |
+								<a ng-href="#/project/{{note.project_id}}/notes"><i class="fa fa-backward"></i> Voltar</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

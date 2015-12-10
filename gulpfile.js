@@ -37,6 +37,26 @@ configCode.vendor_path_css = [
 ];
 
 configCode.build_path_html = configCode.build_path + '/views';
+configCode.build_path_fonts = configCode.build_path + '/fonts';
+configCode.build_path_images = configCode.build_path + '/images';
+
+gulp.task('copy-fonts', function(){
+	gulp.src([configCode.assets_path + '/fonts/**/*'])
+		.pipe(gulp.dest(configCode.build_path_fonts))
+		.pipe(liveReload());
+});
+
+gulp.task('copy-fonts-default', function(){
+	gulp.src([configCode.assets_path + '/fonts/**/*'])
+		.pipe(gulp.dest(configCode.build_path_fonts))
+		.pipe(liveReload());
+});
+
+gulp.task('copy-images',function() {
+	gulp.src([configCode.assets_path + '/images/**/*'])
+		.pipe(gulp.dest(configCode.build_path_images))
+		.pipe(liveReload());
+});
 
 gulp.task('copy-html',function(){
 	gulp.src([configCode.assets_path + '/js/views/**/*.html'])
@@ -69,7 +89,7 @@ gulp.task('clear-build-folder', function(){
 });
 
 gulp.task('default',['clear-build-folder'],function() {
-	gulp.start('copy-html');
+	gulp.start('copy-html', 'copy-fonts','copy-images');
 	elixir(function(mix){
 		mix.styles(configCode.vendor_path_css.concat([configCode.assets_path + '/css/**/*.css']),
 				'public/assets/css/all.css', configCode.assets_path);
@@ -86,7 +106,7 @@ gulp.task('default',['clear-build-folder'],function() {
 
 gulp.task('watch-dev',['clear-build-folder'], function(){
 	liveReload.listen();
-	gulp.start('copy-styles','copy-scripts', 'copy-html');
+	gulp.start('copy-styles','copy-scripts', 'copy-html', 'copy-fonts','copy-images');
 	gulp.watch(configCode.assets_path + '/**', ['copy-styles','copy-scripts', 'copy-html']);
 });
 

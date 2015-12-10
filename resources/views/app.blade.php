@@ -7,9 +7,10 @@
 	<title>Laravel</title>
 	
 	@if(Config::get('app.debug'))
-		<link rel="stylesheet" type="text/css" href="{{asset('build/assets/css/vendor/bootstrap.min.css')}}">
-		<link rel="stylesheet" type="text/css" href="{{asset('build/assets/css/vendor/bootstrap-theme.min.css')}}">
-		<link rel="stylesheet" type="text/css" href="{{asset('build/assets/css/vendor/font-awesome.min.css')}}">
+		<link rel="stylesheet" type="text/css" href="{{asset('build/assets/css/app.css')}}">
+		<link rel="stylesheet" type="text/css" href="{{asset('build/assets/css/components.css')}}">
+		<link rel="stylesheet" type="text/css" href="{{asset('build/assets/css/flaticon.css')}}">
+		<link rel="stylesheet" type="text/css" href="{{asset('build/assets/css/font-awesome.css')}}">
 	@else
 		<link rel="stylesheet" type="text/css" href="{{elixir('assets/css/all.css')}}">
 	@endif
@@ -87,9 +88,18 @@
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/client/clientList.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/client/clientNew.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/client/clientEdit.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/client/clientView.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/client/clientRemove.js')}}"></script>
+
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/note/noteList.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/note/noteShow.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/note/noteNew.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/note/noteEdit.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/note/noteRemove.js')}}"></script>
 
 			<!-- SERVICES -->
 			<script type="text/javascript" src="{{asset('build/assets/js/services/client.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/services/note.js')}}"></script>
 	@else
 		<script type="text/javascript" src="{{elixir('assets/js/all.js')}}"></script>
 	@endif

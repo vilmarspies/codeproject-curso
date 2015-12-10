@@ -28,7 +28,7 @@ class ProjectNoteService
 
 	public function all($id)
     {
-        return $this->repository->findWhere(['project_id'=>$id]);
+        return $this->repository->skipPresenter()->findWhere(['project_id'=>$id]);
     }
 
 	public function store(array $data)
@@ -67,7 +67,7 @@ class ProjectNoteService
 	public function show($id, $noteId)
     {
     	try {
-    		return $this->repository->findWhere(['project_id'=>$id, 'id' =>$noteId]);
+    		return $this->repository->skipPresenter()->find($noteId);
     	} catch (ModelNotFoundException $e) {
     		return [ 'error' => true,
     			'message' => 'Nota de Projeto não encontrado'];

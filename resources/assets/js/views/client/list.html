@@ -21,7 +21,11 @@
 								<td>{{o.responsible}}</td>
 								<td>{{o.email}}</td>
 								<td>{{o.phone}}</td>
-								<td><a ng-href="#/clients/{{o.id}}/edit"><i class="fa fa-pencil"></i>Editar</a></td>
+								<td>
+									<a ng-href="#/clients/{{o.id}}" title="Show"><i class="fa fa-eye"></i> Show</a> | 
+									<a ng-href="#/clients/{{o.id}}/edit" title="Editar"><i class="fa fa-pencil"></i> Editar</a> | 
+									<a ng-href="#/clients/{{o.id}}/remove" title="Excluir"><i class="fa fa-minus"></i> Excluir</a>
+								</td>
 							</tr>
 						</tbody>
 					</table>
