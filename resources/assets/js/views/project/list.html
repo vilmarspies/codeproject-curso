@@ -23,7 +23,7 @@
 								<td>{{o.name}}</td>
 								<td>{{o.description | limitTo:25}}...</td>
 								<td>{{o.progress}}</td>
-								<td>{{o.status}}</td>
+								<td>{{status[o.status-1].label}} - {{o.status}}</td>
 								<td>{{o.due_date | dateBr}}</td>
 								<td><a ng-href="#/project/{{o.id}}/notes" title="Notes"><i class="fa fa-comment"></i></a> | 
 								<a ng-href="#/projects/{{o.id}}/tasks" title="Tasks"><i class="fa fa-tasks"></i></a> | 

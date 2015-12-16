@@ -32,21 +32,25 @@
 						<div class="form-group">
 							<label class="col-md-4 control-label">Progress:</label>
 							<div class="col-md-6">
-								<label class="control-label">{{project.progress}}</label>
+								<div class="progress">
+								  <div class="progress-bar" role="progressbar" aria-valuenow="{{project.progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{project.progress}}%;">
+								   {{project.progress}}%
+								  </div>
+								</div>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label class="col-md-4 control-label">Status:</label>
 							<div class="col-md-6">
-								<label class="control-label">{{project.status}}</label>
+								<label class="control-label">{{status[project.status-1].label}}</label>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label class="col-md-4 control-label">Due Date:</label>
 							<div class="col-md-6">
-								<label class="control-label">{{project.due_date}}</label>
+								<label class="control-label">{{project.due_date|dateBr}}</label>
 							</div>
 						</div>
 
