@@ -40,13 +40,15 @@
 
 			<div class="collapse navbar-collapse" id="navbar">
 				<ul class="nav navbar-nav">
-					<li><a href="{{ url('/') }}">Welcome</a></li>
+					<li><a href="{{ url('/#/home') }}">Home</a></li>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">
+					@{{ logado.name }}
+
 					@if(auth()->guest())
 						@if(!Request::is('auth/login'))
-							<li><a href="{{ url('/auth/login') }}">Login</a></li>
+							<li><a href="{{ url('/#/login') }}">Login</a></li>
 						@endif
 						@if(!Request::is('auth/register'))
 							<li><a href="{{ url('/auth/register') }}">Register</a></li>
@@ -91,15 +93,36 @@
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/client/clientView.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/client/clientRemove.js')}}"></script>
 
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/project/projectList.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/project/projectShow.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/project/projectNew.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/project/projectEdit.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/project/projectRemove.js')}}"></script>
+
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/note/noteList.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/note/noteShow.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/note/noteNew.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/note/noteEdit.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/note/noteRemove.js')}}"></script>
 
+			<!-- <script type="text/javascript" src="{{asset('build/assets/js/controllers/task/taskList.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/task/taskShow.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/task/taskNew.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/task/taskEdit.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/task/taskRemove.js')}}"></script> -->
+
+			<!-- FILTERS -->
+			<script type="text/javascript" src="{{asset('build/assets/js/filters/date-br.js')}}"></script>
+
 			<!-- SERVICES -->
 			<script type="text/javascript" src="{{asset('build/assets/js/services/client.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/services/project.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/services/note.js')}}"></script>
+<!-- 			<script type="text/javascript" src="{{asset('build/assets/js/services/task.js')}}"></script>
+ -->			
+
+ 			<script type="text/javascript" src="{{asset('build/assets/js/services/user.js')}}"></script>
+			
 	@else
 		<script type="text/javascript" src="{{elixir('assets/js/all.js')}}"></script>
 	@endif

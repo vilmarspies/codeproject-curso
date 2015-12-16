@@ -1,0 +1,40 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+			<div class="panel panel-default">
+				<div class="panel-heading">Listagem de Notes</div>
+				<div class="panel-body">
+					<a href="#/projects/new" class="btn btn-success">Novo</a>
+					<table class="table table-hover table-bordered">
+						<thead>
+							<tr>
+								<th>Client</th>
+								<th>Name</th>
+								<th>Description</th>
+								<th>Progress</th>
+								<th>Status</th>
+								<th>Due Date</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="o in projects">
+								<td>{{o.client.name}}</td>
+								<td>{{o.name}}</td>
+								<td>{{o.description | limitTo:25}}...</td>
+								<td>{{o.progress}}</td>
+								<td>{{o.status}}</td>
+								<td>{{o.due_date | dateBr}}</td>
+								<td><a ng-href="#/project/{{o.id}}/notes" title="Notes"><i class="fa fa-comment"></i></a> | 
+								<a ng-href="#/projects/{{o.id}}/tasks" title="Tasks"><i class="fa fa-tasks"></i></a> | 
+								<a ng-href="#/projects/{{o.id}}/show" title="Show"><i class="fa fa-eye"></i></a> | 
+								<a ng-href="#/projects/{{o.id}}/edit" title="Editar"><i class="fa fa-pencil"></i></a> | 
+								<a ng-href="#/projects/{{o.id}}/remove" title="Excluir"><i class="fa fa-minus"></i></a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

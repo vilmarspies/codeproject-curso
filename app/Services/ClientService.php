@@ -28,7 +28,7 @@ class ClientService
 
 	public function all()
 	{
-		return $this->repository->skipPresenter()->all();
+		return $this->repository->all();
 	}
 
 	public function create(array $data)
@@ -49,7 +49,7 @@ class ClientService
 	public function show($id)
     {
     	try {
-    		return $this->repository->skipPresenter()->find($id);
+    		return $this->repository->find($id);
     	} catch (ModelNotFoundException $e) {
     		return [ 'error' => true,
     			'message' => 'Cliente não encontrado'];

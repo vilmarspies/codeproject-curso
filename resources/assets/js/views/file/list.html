@@ -1,0 +1,30 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+			<div class="panel panel-default">
+				<div class="panel-heading">Listagem de Arquivos</div>
+				<div class="panel-body">
+					<a href="#/project/1/files/new" class="btn btn-success">Novo</a>
+					<table class="table table-hover table-bordered">
+						<thead>
+							<tr>
+								<th width="20%">Name</th>
+								<th>Description</th>
+								<th width="10%">Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="o in files">
+								<td>{{o.name}}</td>
+								<td>{{o.description | limitTo:25}}...</td>
+								<td><a ng-href="#/project/{{o.project_id}}/files/{{o.id}}/show" title="Show"><i class="fa fa-eye"></i></a> | 
+								<a ng-href="#/project/{{o.project_id}}/files/{{o.id}}/edit" title="Editar"><i class="fa fa-pencil"></i></a> | 
+								<a ng-href="#/project/{{o.project_id}}/files/{{o.id}}/remove" title="Excluir"><i class="fa fa-minus"></i></a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -67,7 +67,7 @@ class ProjectTaskService
 	public function show($id, $taskId)
     {
     	try {
-    		return $this->repository->findWhere(['project_id'=>$id, 'id' =>$taskId]);
+    		return $this->repository->find( $taskId);
     	} catch (ModelNotFoundException $e) {
     		return [ 'error' => true,
     			'message' => 'Tarefa não encontrada.'];

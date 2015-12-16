@@ -1,0 +1,43 @@
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+			<div class="panel panel-default">
+				<div class="panel-heading">Visualização de Arquivo de Projeto</div>
+				<div class="panel-body">
+
+					<form class="form-horizontal" name="formFile" role="form" method="POST" >
+
+						<div class="form-group" >
+							<label class="col-md-4 control-label">Name:</label>
+							<div class="col-md-6">
+								<label class="control-label">{{file.name}}</label>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-4 control-label">Description:</label>
+							<div class="col-md-6">
+								<label class="control-label">{{file.description}}</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-4 control-label">File:</label>
+							<div class="col-md-6">
+								<a href="#">{{file.status}}</a>
+							</div>
+						</div>
+
+						
+						<div class="form-group">
+							<div class="col-md-6 col-md-offset-4">
+								<a ng-href="#/project/{{file.project_id}}/files/{{file.id}}/edit"><i class="fa fa-pencil"></i> Editar</a> |
+								<a ng-href="#/project/{{file.project_id}}/files"><i class="fa fa-backward"></i> Voltar</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

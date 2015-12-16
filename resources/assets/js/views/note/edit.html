@@ -11,7 +11,7 @@
 
 					<form class="form-horizontal" name="formNote" role="form" ng-submit="save()">
 
-						<div class="form-group" ng-class="{'has-error':!formNote.project_id.$valid && formNote.project_id.$touched}">
+						<!--div class="form-group" ng-class="{'has-error':!formNote.project_id.$valid && formNote.project_id.$touched}">
 							<label class="col-md-4 control-label">Project ID:</label>
 							<div class="col-md-6">
 								<input type="text" class="form-control" name="project_id" ng-model="note.project_id" required>
@@ -19,7 +19,8 @@
 									<div ng-message="required">Campo obrigatório</div>
 								</div>
 							</div>
-						</div>
+						</div-->
+						
 						<div class="form-group" ng-class="{'has-error':!formNote.title.$valid && formNote.title.$touched}">
 							<label class="col-md-4 control-label">Title:</label>
 							<div class="col-md-6">
@@ -33,7 +34,8 @@
 						<div class="form-group" ng-class="{'has-error':!formNote.note.$valid && formNote.note.$touched}">
 							<label class="col-md-4 control-label">Note:</label>
 							<div class="col-md-6">
-								<input type="text" class="form-control" name="note" ng-model="note.note" required>
+							<textarea class="form-control"  name="note" ng-model="note.note" required></textarea>
+
 								<div ng-messages="formNote.note.$error" class="help-block" ng-show="formNote.note.$touched">
 									<div ng-message="required">Campo obrigatório</div>
 								</div>
@@ -48,7 +50,6 @@
 						</div>
 					</form>
 				</div>
-				<pre>{{data|json}}</pre>
 			</div>
 		</div>
 	</div>
