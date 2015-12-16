@@ -7,7 +7,7 @@ angular.module('app.services', ['ngResource']);
 app.provider('appConfig',function(){
 	var config = {
 		baseUrl: 'http://codeproject.curso',
-		project:{
+		project: {
 			status: [
 				{value: 1, label:'Não Iniciado'},
 				{value: 2, label:'Iniciado'},

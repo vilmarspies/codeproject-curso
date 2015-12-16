@@ -55,7 +55,6 @@ class ProjectService
 
 	public function store(array $data)
 	{
-	
 		try {
 			$this->validator->with($data)->passesOrFail();
 			return $this->repository->create($data);
