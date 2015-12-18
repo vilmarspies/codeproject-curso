@@ -14,6 +14,9 @@ use CodeProject\Repositories\IProjectNoteRepository;
 use CodeProject\Repositories\ProjectTaskRepositoryEloquent;
 use CodeProject\Repositories\IProjectTaskRepository;
 
+use CodeProject\Repositories\ProjectFileRepositoryEloquent;
+use CodeProject\Repositories\IProjectFileRepository;
+
 use CodeProject\Repositories\UserRepositoryEloquent;
 use CodeProject\Repositories\IUserRepository;
 
@@ -43,6 +46,7 @@ class CodeProjectRepositoryProvider extends ServiceProvider
         $this->app->bind(IProjectRepository::class, ProjectRepositoryEloquent::class);
         $this->app->bind(IProjectNoteRepository::class, ProjectNoteRepositoryEloquent::class);
         $this->app->bind(IProjectTaskRepository::class, ProjectTaskRepositoryEloquent::class);
+        $this->app->bind(IProjectFileRepository::class, ProjectFileRepositoryEloquent::class);
         $this->app->bind(IUserRepository::class, UserRepositoryEloquent::class);
     }
 }

@@ -15,6 +15,7 @@ use Prettus\Repository\Criteria\RequestCriteria;
 class ClientRepositoryEloquent extends BaseRepository implements IClientRepository
 {
 
+    protected $fieldSearchable = [ 'name'];
 	/**
      * Specify Model class name
      *

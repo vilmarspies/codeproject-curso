@@ -76,11 +76,12 @@
 			<script type="text/javascript" src="{{asset('build/assets/js/vendor/angular-resource.min.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/vendor/angular-animate.min.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/vendor/angular-messages.min.js')}}"></script>
-			<script type="text/javascript" src="{{asset('build/assets/js/vendor/ui-bootstrap.min.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/vendor/ui-bootstrap-tpls.min.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/vendor/navbar.min.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/vendor/angular-cookies.min.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/vendor/query-string.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/vendor/angular-oauth2.min.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/vendor/ng-file-upload.min.js')}}"></script>
 
 			<script type="text/javascript" src="{{asset('build/assets/js/app.js')}}"></script>
 			
@@ -105,18 +106,29 @@
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/note/noteEdit.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/note/noteRemove.js')}}"></script>
 
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/file/fileList.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/file/fileShow.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/file/fileNew.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/file/fileEdit.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/file/fileRemove.js')}}"></script>
+
 			<!-- <script type="text/javascript" src="{{asset('build/assets/js/controllers/task/taskList.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/task/taskShow.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/task/taskNew.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/task/taskEdit.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/task/taskRemove.js')}}"></script> -->
 
+			<!-- DIRECTIVES -->
+			<script type="text/javascript" src="{{asset('build/assets/js/directives/projectFileDownload.js')}}"></script>
+
 			<!-- FILTERS -->
 			<script type="text/javascript" src="{{asset('build/assets/js/filters/date-br.js')}}"></script>
 
 			<!-- SERVICES -->
+			<script type="text/javascript" src="{{asset('build/assets/js/services/url.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/services/client.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/services/project.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/services/file.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/services/note.js')}}"></script>
 <!-- 			<script type="text/javascript" src="{{asset('build/assets/js/services/task.js')}}"></script>
  -->			

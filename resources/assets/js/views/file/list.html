@@ -10,16 +10,19 @@
 							<tr>
 								<th width="20%">Name</th>
 								<th>Description</th>
-								<th width="10%">Actions</th>
+								<th width="15%">Actions</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr ng-repeat="o in files">
 								<td>{{o.name}}</td>
 								<td>{{o.description | limitTo:25}}...</td>
-								<td><a ng-href="#/project/{{o.project_id}}/files/{{o.id}}/show" title="Show"><i class="fa fa-eye"></i></a> | 
-								<a ng-href="#/project/{{o.project_id}}/files/{{o.id}}/edit" title="Editar"><i class="fa fa-pencil"></i></a> | 
-								<a ng-href="#/project/{{o.project_id}}/files/{{o.id}}/remove" title="Excluir"><i class="fa fa-minus"></i></a></td>
+								<td>
+									<project-file-download></project-file-download> | 
+									<a ng-href="#/project/{{o.project_id}}/files/{{o.id}}/show" title="Show"><i class="fa fa-eye"></i></a> | 
+									<a ng-href="#/project/{{o.project_id}}/files/{{o.id}}/edit" title="Editar"><i class="fa fa-pencil"></i></a> | 
+									<a ng-href="#/project/{{o.project_id}}/files/{{o.id}}/remove" title="Excluir"><i class="fa fa-minus"></i></a>
+								</td>
 							</tr>
 						</tbody>
 					</table>

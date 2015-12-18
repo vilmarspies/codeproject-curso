@@ -9,8 +9,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 
 
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Contracts\Filesystem\Factory as Storage;
+
 
 class ProjectService
 {
@@ -24,26 +23,17 @@ class ProjectService
 	*/
 	protected $validator;
 
-    /**
-    * @var Filesystem
-    */
-    protected $filesystem;
 
-    /**
-    * @var Storage
-    */
-    protected $storage;
 
     private $userId;
 
 	/**
 	*
 	*/
-	function __construct(IProjectRepository $repository, ProjectValidator $validator, Filesystem $filesystem, Storage $storage) {
+	function __construct(IProjectRepository $repository, ProjectValidator $validator) {
 		$this->repository = $repository;
 		$this->validator = $validator;
-        $this->filesystem = $filesystem;
-        $this->storage = $storage;
+        
 
         $this->userId = Authorizer::getResourceOwnerId();
 	}
@@ -113,35 +103,6 @@ class ProjectService
     		return [ 'error' => true,'message' => 'Projeto não encontrado'];
     	}
         
-    }
-
-    public function createFile(array $data)
-    {
-        try{
-            $project = $this->repository->skipPresenter()->find($data['project_id']);
-            $projectFile = $project->files()->create($data);
-
-            $this->storage->put($projectFile->id.".".$data['extension'], $this->filesystem->get($data['file']));
-        } catch (ModelNotFoundException $e) {
-            return [ 'error' => true,'message' => 'Projeto não localizado'];
-        }
-        
-    }
-
-    public function deleteFile($projectId, $fileId)
-    {
-        try {
-            if ($this->repository->skipPresenter()->find($projectId)->files()->find($fileId)) {
-                $file = $this->repository->skipPresenter()->find($projectId)->files()->find($fileId);
-                $this->repository->skipPresenter()->find($projectId)->files()->delete($fileId);
-                $this->storage->delete($file->id.'.'.$file->extension);
-            }
-            else{
-                return [ 'error' => true,'message' => 'File não localizado'];
-            }        
-        } catch (ModelNotFoundException $e) {
-            return [ 'error' => true,'message' => 'Projeto não localizado'];
-        }
     }
 
     public function members($id)

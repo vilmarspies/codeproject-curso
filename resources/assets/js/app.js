@@ -1,10 +1,15 @@
-var app = angular.module('app', ['ngRoute','angular-oauth2','app.controllers', 'app.services', 'app.filters']);
+var app = angular.module('app', ['ngRoute','angular-oauth2',
+									'app.controllers', 'app.filters', 'app.directives', 'app.services',
+									'ui.bootstrap.typeahead', 'ui.bootstrap.datepicker', 'ui.bootstrap.tpls',
+									'ngFileUpload'
+]);
 
 angular.module('app.controllers', ['ngMessages', 'angular-oauth2']);
 angular.module('app.filters', []);
+angular.module('app.directives', []);
 angular.module('app.services', ['ngResource']);
 
-app.provider('appConfig',function(){
+app.provider('appConfig',['$httpParamSerializerProvider', function($httpParamSerializerProvider){
 	var config = {
 		baseUrl: 'http://codeproject.curso',
 		project: {
@@ -13,6 +18,28 @@ app.provider('appConfig',function(){
 				{value: 2, label:'Iniciado'},
 				{value: 3, label:'Concluido'}
 			]
+		},
+		urls:{
+			projectFile: '/project/{{id}}/file/{{fileId}}'
+		},
+		utils: {
+			transformRequest: function(data){
+				if(angular.isObject(data)){
+					return $httpParamSerializerProvider.$get()(data);
+				} 
+				return data;
+			},
+			transformResponse: function(data, headers){
+				var headersGetter = headers();
+				if (headersGetter['content-type'] == 'application/json' || headersGetter['content-type']=='text/json'){
+					var dataJson = JSON.parse(data);
+					if(dataJson.hasOwnProperty('data')){
+						dataJson = dataJson.data;
+					}
+					return dataJson;
+				}
+				return data;
+			}
 		}
 	};
 	return {
@@ -21,21 +48,17 @@ app.provider('appConfig',function(){
 			return config;
 		}
 	};
-});
+}]);
 
 app.config(['$routeProvider', '$httpProvider', 'OAuthProvider', 'OAuthTokenProvider', 'appConfigProvider',
-				function($routeProvider, $httpProvider, OAuthProvider, OAuthTokenProvider, appConfigProvider) {
-	$httpProvider.defaults.transformResponse = function(data,headers) {
-		var headersGetter = headers();
-		if (headersGetter['content-type'] == 'application/json' || headersGetter['content-type']=='text/json'){
-			var dataJson = JSON.parse(data);
-			if(dataJson.hasOwnProperty('data')){
-				dataJson = dataJson.data;
-			}
-			return dataJson;
-		}
-		return data;
-	}
+		function($routeProvider, $httpProvider, OAuthProvider, OAuthTokenProvider, appConfigProvider) {
+
+	$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+	$httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+
+	$httpProvider.defaults.transformRequest = appConfigProvider.config.utils.transformRequest;
+	$httpProvider.defaults.transformResponse = appConfigProvider.config.utils.transformResponse;
+	
 	$routeProvider
 		.when('/login',{
 			templateUrl: 'build/assets/views/login.html',
@@ -112,13 +135,13 @@ app.config(['$routeProvider', '$httpProvider', 'OAuthProvider', 'OAuthTokenProvi
 			templateUrl: 'build/assets/views/note/remove.html',
 			controller: 'ProjectNoteRemoveController'
 		})
-		//ProjectNote LIST
+		//ProjectFile LIST
 		.when('/project/:id/files',{
-			templateUrl: 'build/assets/views/note/list.html',
+			templateUrl: 'build/assets/views/file/list.html',
 			controller: 'ProjectFileListController'
 		})//ProjectFile NEW
 		.when('/project/:id/files/new',{
-			templateUrl: 'build/assets/views/note/new.html',
+			templateUrl: 'build/assets/views/file/new.html',
 			controller: 'ProjectFileNewController'
 		})//ProjectFile SHOW
 		.when('/project/:id/files/:fileId/show',{

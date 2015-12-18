@@ -3,7 +3,7 @@
 namespace CodeProject\Http\Controllers;
 
 use Illuminate\Http\Request;
-use CodeProject\Services\ProjectService;
+use CodeProject\Services\ProjectFileService;
 
 
 class ProjectFileController extends Controller
@@ -13,7 +13,7 @@ class ProjectFileController extends Controller
     */
     private $service;
 
-    function __construct(ProjectService $service) {
+    function __construct(ProjectFileService $service) {
         $this->service = $service;
     }
     /**
@@ -21,9 +21,9 @@ class ProjectFileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        return $this->service->all();
+        return $this->service->all($id);
     }
 
     /**
@@ -34,21 +34,10 @@ class ProjectFileController extends Controller
      */
     public function store(Request $request, $id)
     {
-        $errors = ['error'=>false];
+       
         if (is_null($request->file('file'))){
-            $errors['error']=true;
-            $errors['file'] = 'Informe o Arquivo';
-        }
-        if ($request->name == ''){
-            $errors['error']=true;
-            $errors['name']='Informe o Nome';
-        }
-        if ($request->description == ''){
-            $errors['error']=true;
-            $errors['description']='Informe o Description';
-        }
-        if ($errors['error']){
-            return $errors;
+            return ['error' =>true,
+                    'message' => 'Informe o Arquivo'];
         }
         $file = $request->file('file');
         $data['file'] = $file;
@@ -62,15 +51,26 @@ class ProjectFileController extends Controller
         //return $this->service->store($request->all());
     }
 
+    public function showFile($id, $fileId)
+    {
+        if($this->service->checkProjectPermissions($fileId) == false){
+            return ['error' => 'Acesso Negado'];
+        }
+        return response()->download($this->service->getFilePath($fileId));
+    }
+
     /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, $fileId)
     {
-        return $this->service->show($id);
+        if($this->service->checkProjectPermissions($fileId) == false){
+            return ['error' => 'Acesso Negado'];
+        }
+        return $this->service->show($fileId);
     }
 
 
@@ -81,9 +81,12 @@ class ProjectFileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, $fileId)
     {
-        return $this->service->update($request->all(), $id);
+        if($this->service->checkProjectPermissions($fileId) == false){
+            return ['error' => 'Acesso Negado'];
+        }
+        return $this->service->update($request->all(), $fileId);
     }
 
     /**
@@ -94,26 +97,9 @@ class ProjectFileController extends Controller
      */
     public function destroy($id, $fileId)
     {
-        return $this->service->deleteFile($id, $fileId);
-    }
-
-    public function members($id)
-    {
-       return $this->service->members($id);
-    }
-
-    public function addMember(Request $request, $projectId)
-    {
-        return $this->service->addMember($projectId, $request->get('user_id'));
-    }
-
-    public function removeMember($projectId, $userId)
-    {
-       return $this->service->removeMember($projectId, $userId);
-    }
-
-    public function isMember($projectId, $userId)
-    {
-        return $this->service->isMember($projectId, $userId);
+        if($this->service->checkProjectPermissions($fileId) == false){
+            return ['error' => 'Acesso Negado'];
+        }
+        return $this->service->delete($fileId);
     }
 }

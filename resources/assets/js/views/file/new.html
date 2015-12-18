@@ -44,7 +44,7 @@
 						<div class="form-group" ng-class="{'has-error':!formFile.file.$valid && formFile.file.$touched}">
 							<label class="col-md-4 control-label">File:</label>
 							<div class="col-md-6">
-							<input type="file" class="form-control"  name="file" ng-model="file.file" required>
+								<div class="btn btn-info" ngf-select ng-model="file.file" name="file" required>Select</div>
 
 								<div ng-messages="formFile.file.$error" class="help-block" ng-show="formFile.file.$touched">
 									<div ng-message="required">Campo obrigatório</div>
