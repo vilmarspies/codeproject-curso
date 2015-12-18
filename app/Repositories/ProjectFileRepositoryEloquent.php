@@ -1,0 +1,40 @@
+<?php
+
+namespace CodeProject\Repositories;
+
+use Prettus\Repository\Eloquent\BaseRepository;
+use Prettus\Repository\Criteria\RequestCriteria;
+
+use CodeProject\Repositories\IProjectFileRepository;
+use CodeProject\Entities\ProjectFile;
+use CodeProject\Presenters\ProjectFilePresenter;
+
+/**
+ * Class ProjectFileRepositoryEloquent
+ * @package namespace CodeProject\Repositories;
+ */
+class ProjectFileRepositoryEloquent extends BaseRepository implements IProjectFileRepository
+{
+    /**
+     * Specify Model class name
+     *
+     * @return string
+     */
+    public function model()
+    {
+        return ProjectFile::class;
+    }
+
+    /**
+     * Boot up the repository, pushing criteria
+     */
+    public function boot()
+    {
+        $this->pushCriteria(app(RequestCriteria::class));
+    }
+
+    public function presenter()
+    {
+        return ProjectFilePresenter::class;
+    }
+}
