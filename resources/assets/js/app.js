@@ -1,5 +1,5 @@
 var app = angular.module('app', ['ngRoute','angular-oauth2',
-									'app.controllers', 'app.filters', 'app.directives', 'app.services',
+									'app.controllers', 'app.filters', 'app.services', 'app.directives',
 									'ui.bootstrap.typeahead', 'ui.bootstrap.datepicker', 'ui.bootstrap.tpls',
 									'ngFileUpload'
 ]);

@@ -38,7 +38,7 @@ class Project extends Model
 
     public function members()
     {
-        return $this->belongsToMany(User::class, 'project_members', 'project_id', 'user_id');
+        return $this->belongsToMany(User::class, 'project_members', 'project_id', 'member_id');
     }
 
     public function files()
