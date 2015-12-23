@@ -184,21 +184,21 @@ class ProjectService
     {
        // $userId = Authorizer::getResourceOwnerId();
 
-        return $this->repository->isOwner($projectId, $this->userId)
+        return $this->repository->isOwner($projectId, $this->userId);
     }
 
     public function checkProjectMember($projectId)
     {
        // $userId = Authorizer::getResourceOwnerId();
 
-        return $this->repository->hasMember($projectId, $this->userId)
+        return $this->repository->hasMember($projectId, $this->userId);
     }
 
     public function checkProjectPermissions($projectId)
     {
         //$userId = Authorizer::getResourceOwnerId();
 
-        if ($this->repository->isOwner($projectId, $userId) or $this->repository->hasMember($projectId, $this->userId))
+        if ($this->repository->isOwner($projectId, $this->userId) or $this->repository->hasMember($projectId, $this->userId))
             return true;
         return false;
     }

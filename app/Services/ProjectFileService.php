@@ -107,7 +107,7 @@ class ProjectFileService
     		return $this->repository->find($id);
     	} catch (ModelNotFoundException $e) {
     		return [ 'error' => true,
-    			'message' => 'Nota de Projeto não encontrado'];
+    			'message' => 'File de Projeto não encontrado'];
     	}
         
     }
