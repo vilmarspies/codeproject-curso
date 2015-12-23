@@ -53,10 +53,12 @@ class ProjectFileController extends Controller
 
     public function showFile($id, $fileId)
     {
-        if($this->service->checkProjectPermissions($fileId) == false){
-            return ['error' => 'Acesso Negado'];
-        }
-        return response()->download($this->service->getFilePath($fileId));
+
+        return [
+            'file' => base64_encode(file_get_contents($this->service->getFilePath($fileId))),
+            'size' => filesize($this->service->getFilePath($fileId)),
+            'name' => $this->service->getFileName($fileId)
+        ];
     }
 
     /**
@@ -67,9 +69,6 @@ class ProjectFileController extends Controller
      */
     public function show($id, $fileId)
     {
-        if($this->service->checkProjectPermissions($fileId) == false){
-            return ['error' => 'Acesso Negado'];
-        }
         return $this->service->show($fileId);
     }
 
@@ -83,9 +82,6 @@ class ProjectFileController extends Controller
      */
     public function update(Request $request, $id, $fileId)
     {
-        if($this->service->checkProjectPermissions($fileId) == false){
-            return ['error' => 'Acesso Negado'];
-        }
         return $this->service->update($request->all(), $fileId);
     }
 
@@ -97,9 +93,6 @@ class ProjectFileController extends Controller
      */
     public function destroy($id, $fileId)
     {
-        if($this->service->checkProjectPermissions($fileId) == false){
-            return ['error' => 'Acesso Negado'];
-        }
-        return $this->service->delete($fileId);
+       $this->service->delete($fileId);
     }
 }

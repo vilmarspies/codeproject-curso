@@ -5,16 +5,18 @@ namespace CodeProject\Http\Middleware;
 use Closure;
 use CodeProject\Services\ProjectService;
 
-use LucaDegasperi\OAuth2Server\Facades\Authorizer;
-
-class CheckProjectOwner
+class CheckProjectPermission
 {
+    /**
+     * @var ProjectService
+     */
     private $service;
 
     public function __construct(ProjectService $service)
     {
         $this->service = $service;
     }
+
     /**
      * Handle an incoming request.
      *
@@ -24,12 +26,10 @@ class CheckProjectOwner
      */
     public function handle($request, Closure $next)
     {
-        $projectId = $request->route('id') ? $request->route('id'):$request->route('project');
-
-        if(!$this->service->checkProjectOwner($projectId))
+        $projectId = $request->route('id');
+        if (!$this->service->checkProjectPermissions($projectId))
         {
-            return ['code'=>403,
-                        'error'=>'Access forbidden'];
+            return ['code'=>403, 'error' => 'You haven\'t permission to access project'];
         }
         return $next($request);
     }

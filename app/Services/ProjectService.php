@@ -40,7 +40,7 @@ class ProjectService
 
 	public function all()
     {
-        return $this->repository->with(['owner','client'])->findWhere(['owner_id'=>Authorizer::getResourceOwnerId()]);
+        return $this->repository->with(['owner','client'])->findWithOwnerAndMember($this->userId);
     }
 
 	public function store(array $data)
@@ -180,22 +180,25 @@ class ProjectService
         
     }
 
-    private function checkProjectOwner($projectId)
+    public function checkProjectOwner($projectId)
     {
-        $userId = Authorizer::getResourceOwnerId();
+       // $userId = Authorizer::getResourceOwnerId();
 
-        if($this->repository->isOwner($projectId, $userId))
-        {
-            return true; 
-        }
-        return false;
+        return $this->repository->isOwner($projectId, $this->userId)
+    }
+
+    public function checkProjectMember($projectId)
+    {
+       // $userId = Authorizer::getResourceOwnerId();
+
+        return $this->repository->hasMember($projectId, $this->userId)
     }
 
     public function checkProjectPermissions($projectId)
     {
-        $userId = Authorizer::getResourceOwnerId();
+        //$userId = Authorizer::getResourceOwnerId();
 
-        if ($this->repository->isOwner($projectId, $userId) or $this->repository->hasMember($projectId, $userId))
+        if ($this->repository->isOwner($projectId, $userId) or $this->repository->hasMember($projectId, $this->userId))
             return true;
         return false;
     }

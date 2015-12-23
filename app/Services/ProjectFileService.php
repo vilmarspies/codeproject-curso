@@ -4,6 +4,7 @@
 use CodeProject\Repositories\IProjectFileRepository;
 use CodeProject\Repositories\IProjectRepository;
 use CodeProject\Validators\ProjectFileValidator;
+use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -63,7 +64,7 @@ class ProjectFileService
 	public function createFile(array $data)
     {
         try{
-        	$this->validator->with($data)->passesOrFail();
+        	$this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);
             $project = $this->projectRepository->skipPresenter()->find($data['project_id']);
             $projectFile = $project->files()->create($data);
 
@@ -85,7 +86,7 @@ class ProjectFileService
 	public function update(array $data, $id)
 	{
 		try {
-			$this->validator->with($data)->passesOrFail();
+			$this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_UPDATE);
 			return $this->repository->update($data, $id);
 		} catch (ValidatorException $e) {
 			return [
@@ -116,6 +117,12 @@ class ProjectFileService
     	$projectFile = $this->repository->skipPresenter()->find($id);
     	return $this->getBaseUrl($projectFile);
     }
+
+    public function getFileName($id)
+    {
+        $projectFile = $this->repository->skipPresenter()->find($id);
+        return $projectFile->id . '.' .$projectFile->extension;
+    }
     
     private function getBaseUrl($file)
     {
@@ -142,33 +149,4 @@ class ProjectFileService
             return [ 'error' => true,'message' => 'File não localizado'];
         }
     }
-
-    public function checkProjectOwner($projectFileId)
-    {
-
-        $userId = Authorizer::getResourceOwnerId();
-
-        $projectId = $this->repository->skipPresenter()->find($projectFileId)->project_id;
-
-        return $this->projectRepository->isOwner($projectId, $userId);
-    }
-
-    public function checkProjectMember($projectFileId)
-    {
-    	$userId = Authorizer::getResourceOwnerId();
-
-        $projectId = $this->repository->skipPresenter()->find($projectFileId)->project_id;
-
-        return $this->projectRepository->hasMember($projectId, $userId);
-       
-    }
-
-    public function checkProjectPermissions($projectFileId)
-    {
-
-    	if($this->checkProjectOwner($projectFileId) or $this->checkProjectMember($projectFileId))
-    		return true;
-    	return false;
-    }
-
 }
