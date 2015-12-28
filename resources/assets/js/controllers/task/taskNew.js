@@ -2,7 +2,6 @@ angular.module('app.controllers')
 	.controller('ProjectTaskNewController', ['$scope', '$routeParams', '$location','ProjectTask', 
 					function($scope, $routeParams, $location, ProjectTask){
 		$scope.task = new ProjectTask();
-		$scope.task.project_id = $routeParams.id;
 
 		$scope.save = function () {
 			if ($scope.formTask.$valid){

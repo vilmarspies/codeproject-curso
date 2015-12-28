@@ -9,7 +9,7 @@ angular.module('app.filters', []);
 angular.module('app.directives', []);
 angular.module('app.services', ['ngResource']);
 
-app.provider('appConfig',['$httpParamSerializerProvider', function($httpParamSerializerProvider){
+app.provider('appConfig', ['$httpParamSerializerProvider', function($httpParamSerializerProvider){
 	var config = {
 		baseUrl: 'http://codeproject.curso',
 		project: {

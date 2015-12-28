@@ -5,7 +5,7 @@ angular.module('app.controllers')
 
 		$scope.save = function () {
 			if ($scope.formFile.$valid){
-				ProjectFile.update({id:$scope.file.project_id, fileId:$scope.file.id}, $scope.file,function(){
+				ProjectFile.update({id:$routeParams.id, fileId:$scope.file.id}, $scope.file,function(){
 					$location.path('/project/'+ $scope.file.project_id + '/files');
 				});
 			}

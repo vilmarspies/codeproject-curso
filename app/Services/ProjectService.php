@@ -40,7 +40,7 @@ class ProjectService
 
 	public function all()
     {
-        return $this->repository->with(['owner','client'])->findWithOwnerAndMember($this->userId);
+        return $this->repository->findWithOwnerAndMember($this->userId);
     }
 
 	public function store(array $data)

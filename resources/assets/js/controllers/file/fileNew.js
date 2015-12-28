@@ -8,8 +8,7 @@ angular.module('app.controllers')
 		            url: appConfig.baseUrl+ Url.getUrlFromUrlSymbol(appConfig.urls.projectFile, {id:$routeParams.id, fileId: ''}),
 		            fields: {
 		            	'name': $scope.file.name,
-		            	'description': $scope.file.description,
-		            	'project_id': $routeParams.id
+		            	'description': $scope.file.description
 		            },
 		            file: $scope.file.file
 		        }).then(function (resp) {
