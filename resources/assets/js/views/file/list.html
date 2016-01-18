@@ -4,7 +4,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">Listagem de Arquivos</div>
 				<div class="panel-body">
-					<a href="#/project/1/files/new" class="btn btn-success">Novo</a>
+					<a href="#/project/{{projectId}}/file/new" class="btn btn-success">Novo</a>
 					<table class="table table-hover table-bordered">
 						<thead>
 							<tr>
@@ -19,9 +19,9 @@
 								<td>{{o.description | limitTo:25}}...</td>
 								<td>
 									<project-file-download id-project="{{o.project_id}}" id-file='{{o.id}}'></project-file-download> | 
-									<a ng-href="#/project/{{o.project_id}}/files/{{o.id}}/show" title="Show"><i class="fa fa-eye"></i></a> | 
-									<a ng-href="#/project/{{o.project_id}}/files/{{o.id}}/edit" title="Editar"><i class="fa fa-pencil"></i></a> | 
-									<a ng-href="#/project/{{o.project_id}}/files/{{o.id}}/remove" title="Excluir"><i class="fa fa-minus"></i></a>
+									<a ng-href="#/project/{{o.project_id}}/file/{{o.id}}/show" title="Show"><i class="fa fa-eye"></i></a> | 
+									<a ng-href="#/project/{{o.project_id}}/file/{{o.id}}/edit" title="Editar"><i class="fa fa-pencil"></i></a> | 
+									<a ng-href="#/project/{{o.project_id}}/file/{{o.id}}/remove" title="Excluir"><i class="fa fa-minus"></i></a>
 								</td>
 							</tr>
 						</tbody>

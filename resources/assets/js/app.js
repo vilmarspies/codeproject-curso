@@ -1,7 +1,8 @@
 var app = angular.module('app', ['ngRoute','angular-oauth2',
 									'app.controllers', 'app.filters', 'app.services', 'app.directives',
-									'ui.bootstrap.typeahead', 'ui.bootstrap.datepicker', 'ui.bootstrap.tpls',
-									'ngFileUpload'
+									'ui.bootstrap.typeahead', 'ui.bootstrap.datepicker', 'ui.bootstrap.tpls', 'ui.bootstrap.modal', 'ui.bootstrap.dropdown',
+									'ngFileUpload', 'http-auth-interceptor', 'angularUtils.directives.dirPagination',
+									'mgcrea.ngStrap.navbar',
 ]);
 
 angular.module('app.controllers', ['ngMessages', 'angular-oauth2']);
@@ -17,6 +18,13 @@ app.provider('appConfig', ['$httpParamSerializerProvider', function($httpParamSe
 				{value: 1, label:'Não Iniciado'},
 				{value: 2, label:'Iniciado'},
 				{value: 3, label:'Concluido'}
+			]
+		},
+		task: {
+			status: [
+				{value: 1, label:'Não Iniciada'},
+				{value: 2, label:'Incompleta'},
+				{value: 3, label:'Completa'}
 			]
 		},
 		urls:{
@@ -58,11 +66,25 @@ app.config(['$routeProvider', '$httpProvider', 'OAuthProvider', 'OAuthTokenProvi
 
 	$httpProvider.defaults.transformRequest = appConfigProvider.config.utils.transformRequest;
 	$httpProvider.defaults.transformResponse = appConfigProvider.config.utils.transformResponse;
+
+	$httpProvider.interceptors.splice(0,1);
+	$httpProvider.interceptors.splice(0,1);
+	$httpProvider.interceptors.push('oauthFixInterceptor');
 	
 	$routeProvider
 		.when('/login',{
 			templateUrl: 'build/assets/views/login.html',
 			controller: 'LoginController'
+		})
+		.when('/logout',{
+			resolve: {
+				logout: ['$rootScope','$location', 'OAuthToken',function($rootScope,$location,OAuthToken){
+					OAuthToken.removeToken();
+					$rootScope.logado = false;
+
+					$location.path('login');
+				}]
+			}
 		})
 		.when('/home',{
 			templateUrl: 'build/assets/views/home.html',
@@ -76,20 +98,20 @@ app.config(['$routeProvider', '$httpProvider', 'OAuthProvider', 'OAuthTokenProvi
 			templateUrl: 'build/assets/views/client/list.html',
 			controller: 'ClientListController'
 		})
-		.when('/clients/new',{
+		.when('/client/new',{
 			templateUrl: 'build/assets/views/client/new.html',
 			controller: 'ClientNewController'
 		})
-		.when('/clients/:id/show',{
+		.when('/client/:id/show',{
 			templateUrl: 'build/assets/views/client/view.html',
 			controller: 'ClientViewController'
 		})
 		
-		.when('/clients/:id/edit',{
+		.when('/client/:id/edit',{
 			templateUrl: 'build/assets/views/client/edit.html',
 			controller: 'ClientEditController'
 		})
-		.when('/clients/:id/remove',{
+		.when('/client/:id/remove',{
 			templateUrl: 'build/assets/views/client/remove.html',
 			controller: 'ClientRemoveController'
 		})
@@ -98,19 +120,19 @@ app.config(['$routeProvider', '$httpProvider', 'OAuthProvider', 'OAuthTokenProvi
 			templateUrl: 'build/assets/views/project/list.html',
 			controller: 'ProjectListController'
 		})//Project NEW
-		.when('/projects/new',{
+		.when('/project/new',{
 			templateUrl: 'build/assets/views/project/new.html',
 			controller: 'ProjectNewController'
 		})//Project SHOW
-		.when('/projects/:id/show',{
+		.when('/project/:id/show',{
 			templateUrl: 'build/assets/views/project/show.html',
 			controller: 'ProjectShowController'
 		})//Project EDIT 
-		.when('/projects/:id/edit',{
+		.when('/project/:id/edit',{
 			templateUrl: 'build/assets/views/project/edit.html',
 			controller: 'ProjectEditController'
 		})//Project REMOVE
-		.when('/projects/:id/remove',{
+		.when('/project/:id/remove',{
 			templateUrl: 'build/assets/views/project/remove.html',
 			controller: 'ProjectRemoveController'
 		})
@@ -119,19 +141,19 @@ app.config(['$routeProvider', '$httpProvider', 'OAuthProvider', 'OAuthTokenProvi
 			templateUrl: 'build/assets/views/note/list.html',
 			controller: 'ProjectNoteListController'
 		})//ProjectNote NEW
-		.when('/project/:id/notes/new',{
+		.when('/project/:id/note/new',{
 			templateUrl: 'build/assets/views/note/new.html',
 			controller: 'ProjectNoteNewController'
 		})//ProjectNote SHOW
-		.when('/project/:id/notes/:noteId/show',{
+		.when('/project/:id/note/:noteId/show',{
 			templateUrl: 'build/assets/views/note/show.html',
 			controller: 'ProjectNoteShowController'
 		})//ProjectNote EDIT 
-		.when('/project/:id/notes/:noteId/edit',{
+		.when('/project/:id/note/:noteId/edit',{
 			templateUrl: 'build/assets/views/note/edit.html',
 			controller: 'ProjectNoteEditController'
 		})//ProjectNote REMOVE
-		.when('/project/:id/notes/:noteId/remove',{
+		.when('/project/:id/note/:noteId/remove',{
 			templateUrl: 'build/assets/views/note/remove.html',
 			controller: 'ProjectNoteRemoveController'
 		})
@@ -140,42 +162,53 @@ app.config(['$routeProvider', '$httpProvider', 'OAuthProvider', 'OAuthTokenProvi
 			templateUrl: 'build/assets/views/file/list.html',
 			controller: 'ProjectFileListController'
 		})//ProjectFile NEW
-		.when('/project/:id/files/new',{
+		.when('/project/:id/file/new',{
 			templateUrl: 'build/assets/views/file/new.html',
 			controller: 'ProjectFileNewController'
 		})//ProjectFile SHOW
-		.when('/project/:id/files/:fileId/show',{
+		.when('/project/:id/file/:fileId/show',{
 			templateUrl: 'build/assets/views/file/show.html',
 			controller: 'ProjectFileShowController'
 		})//ProjectFile EDIT 
-		.when('/project/:id/files/:fileId/edit',{
+		.when('/project/:id/file/:fileId/edit',{
 			templateUrl: 'build/assets/views/file/edit.html',
 			controller: 'ProjectFileEditController'
 		})//ProjectFile REMOVE
-		.when('/project/:id/files/:fileId/remove',{
+		.when('/project/:id/file/:fileId/remove',{
 			templateUrl: 'build/assets/views/file/remove.html',
 			controller: 'ProjectFileRemoveController'
 		})
-		//ProjectNote LIST
+
+		//ProjectTask LIST
 		.when('/project/:id/tasks',{
 			templateUrl: 'build/assets/views/task/list.html',
 			controller: 'ProjectTaskListController'
 		})//ProjectTask NEW
-		.when('/project/:id/tasks/new',{
+		.when('/project/:id/task/new',{
 			templateUrl: 'build/assets/views/task/new.html',
 			controller: 'ProjectTaskNewController'
 		})//ProjectTask SHOW
-		.when('/project/:id/tasks/:noteId/show',{
+		.when('/project/:id/task/:taskId/show',{
 			templateUrl: 'build/assets/views/task/show.html',
 			controller: 'ProjectTaskShowController'
 		})//ProjectTask EDIT 
-		.when('/project/:id/tasks/:noteId/edit',{
+		.when('/project/:id/task/:taskId/edit',{
 			templateUrl: 'build/assets/views/task/edit.html',
 			controller: 'ProjectTaskEditController'
 		})//ProjectTask REMOVE
-		.when('/project/:id/tasks/:noteId/remove',{
+		.when('/project/:id/task/:taskId/remove',{
 			templateUrl: 'build/assets/views/task/remove.html',
 			controller: 'ProjectTaskRemoveController'
+		})
+		
+		//ProjectMember LIST
+		.when('/project/:id/members',{
+			templateUrl: 'build/assets/views/member/list.html',
+			controller: 'ProjectMemberListController'
+		})//ProjectMember REMOVE
+		.when('/project/:id/member/:memberId/remove',{
+			templateUrl: 'build/assets/views/member/remove.html',
+			controller: 'ProjectMemberRemoveController'
 		});
 
 		OAuthProvider.configure({
@@ -193,19 +226,58 @@ app.config(['$routeProvider', '$httpProvider', 'OAuthProvider', 'OAuthTokenProvi
 	    });
 }]);
 
-app.run(['$rootScope', '$window', 'OAuth', function($rootScope, $window, OAuth) {
-    $rootScope.$on('oauth:error', function(event, rejection) {
+app.run(['$rootScope', '$location', '$http', '$cookies', '$modal', 'httpBuffer', 'OAuth', 
+	function($rootScope, $location, $http, $cookies, $modal, httpBuffer, OAuth) {
+	//AUTORIZAÇÃO
+	$rootScope.$on('$routeChangeStart',function(event,next,current){
+		if(next.$$route.originalPath != '/login'){
+			if (!OAuth.isAuthenticated()){
+				$location.path('login');
+			}
+		}
+	});
+
+	$rootScope.userLogado = $cookies.getObject('user');
+
+    $rootScope.$on('oauth:error', function(event, data) {
       // Ignore `invalid_grant` error - should be catched on `LoginController`.
-      if ('invalid_grant' === rejection.data.error) {
+      if ('invalid_grant' === data.rejection.data.error) {
         return;
       }
 
       // Refresh token when a `invalid_token` error occurs.
-      if ('invalid_token' === rejection.data.error) {
-        return OAuth.getRefreshToken();
+      if ('access_denied' === data.rejection.data.error) {
+
+      	httpBuffer.append(data.rejection.config, data.deferred);
+
+      	if (!$rootScope.loginModalOpened){
+	      	var modalInstance = $modal.open({
+	      		templateUrl: 'build/assets/views/templates/loginModal.html',
+	      		controller: 'LoginModalController'
+
+	      	});
+	      	$rootScope.loginModalOpened = true;
+	    }
+      	return;
+      	/*if (!$rootScope.isRefreshingToken)
+      	{
+	      	$rootScope.isRefreshingToken = true;
+	        return OAuth.getRefreshToken().then(function(response) {
+	        	$rootScope.isRefreshingToken = false;
+	        	return $http(data.rejection.config).then(function(resp){
+	        		return data.deferred.resolve(resp);
+	        	});
+	        });
+        }
+        else
+        {
+        	return $http(data.rejection.config).then(function(resp){
+	        	return data.deferred.resolve(resp);
+	        });
+        }*/
       }
 
       // Redirect to `/login` with the `error_reason`.
-      return $window.location.href = '/login?error_reason=' + rejection.data.error;
+      return $location.path('login');
     });
   }]);

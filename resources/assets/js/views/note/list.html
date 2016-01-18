@@ -4,7 +4,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">Listagem de Notes</div>
 				<div class="panel-body">
-					<a href="#/project/1/notes/new" class="btn btn-success">Novo</a>
+					<a href="#/project/{{projectId}}/note/new" class="btn btn-success">Novo</a>
 					<table class="table table-hover table-bordered">
 						<thead>
 							<tr>
@@ -17,9 +17,9 @@
 							<tr ng-repeat="o in notes">
 								<td>{{o.title}}</td>
 								<td>{{o.note | limitTo:25}}...</td>
-								<td><a ng-href="#/project/{{o.project_id}}/notes/{{o.id}}/show" title="Show"><i class="fa fa-eye"></i></a> | 
-								<a ng-href="#/project/{{o.project_id}}/notes/{{o.id}}/edit" title="Editar"><i class="fa fa-pencil"></i></a> | 
-								<a ng-href="#/project/{{o.project_id}}/notes/{{o.id}}/remove" title="Excluir"><i class="fa fa-minus"></i></a></td>
+								<td><a ng-href="#/project/{{o.project_id}}/note/{{o.id}}/show" title="Show"><i class="fa fa-eye"></i></a> | 
+								<a ng-href="#/project/{{o.project_id}}/note/{{o.id}}/edit" title="Editar"><i class="fa fa-pencil"></i></a> | 
+								<a ng-href="#/project/{{o.project_id}}/note/{{o.id}}/remove" title="Excluir"><i class="fa fa-minus"></i></a></td>
 							</tr>
 						</tbody>
 					</table>

@@ -1,6 +1,6 @@
 angular.module('app.controllers')
-	.controller('ProjectTaskShowController', ['$scope', '$location', '$routeParams','ProjectTask', 
-				function($scope, $location, $routeParams, ProjectTask){
-		$scope.note = ProjectTask.get({id: $routeParams.id, taskId:$routeParams.taskId});
-
+	.controller('ProjectTaskShowController', ['$scope', '$location', '$routeParams','ProjectTask', 'appConfig',
+				function($scope, $location, $routeParams, ProjectTask, appConfig){
+		$scope.task = ProjectTask.get({id: $routeParams.id, taskId:$routeParams.taskId});
+		$scope.status = appConfig.task.status;
 	}]);

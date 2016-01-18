@@ -34,13 +34,13 @@ class ProjectService
 		$this->repository = $repository;
 		$this->validator = $validator;
         
-
         $this->userId = Authorizer::getResourceOwnerId();
 	}
 
 	public function all()
     {
-        return $this->repository->findWithOwnerAndMember($this->userId);
+        return $this->repository->findWithOwnerAndMember2($this->userId);
+        return $this->repository->findOwner($this->userId);
     }
 
 	public function store(array $data)

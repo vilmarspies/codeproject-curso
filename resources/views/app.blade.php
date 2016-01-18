@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="app">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-BR" ng-app="app">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,51 +26,15 @@
 	<![endif]-->
 </head>
 <body>
-	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
-					<span class="sr-only">Toggle Navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="#">Laravel</a>
-			</div>
 
-			<div class="collapse navbar-collapse" id="navbar">
-				<ul class="nav navbar-nav">
-					<li><a href="{{ url('/#/home') }}">Home</a></li>
-				</ul>
-
-				<ul class="nav navbar-nav navbar-right">
-					@{{ logado.name }}
-
-					@if(auth()->guest())
-						@if(!Request::is('auth/login'))
-							<li><a href="{{ url('/#/login') }}">Login</a></li>
-						@endif
-						@if(!Request::is('auth/register'))
-							<li><a href="{{ url('/auth/register') }}">Register</a></li>
-						@endif
-					@else
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ auth()->user()->name }} <span class="caret"></span></a>
-							<ul class="dropdown-menu" role="menu">
-								<li><a href="{{ url('/auth/logout') }}">Logout</a></li>
-							</ul>
-						</li>
-					@endif
-				</ul>
-			</div>
-		</div>
-	</nav>
+<load-template url="build/assets/views/templates/menu.html"></load-template>
 
 <div ng-view></div>
 
 	<!-- Scripts -->
 	@if(Config::get('app.debug'))
 			<script type="text/javascript" src="{{asset('build/assets/js/vendor/jquery.min.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/vendor/bootstrap.min.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/vendor/angular.min.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/vendor/angular-route.min.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/vendor/angular-resource.min.js')}}"></script>
@@ -82,11 +46,15 @@
 			<script type="text/javascript" src="{{asset('build/assets/js/vendor/query-string.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/vendor/angular-oauth2.min.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/vendor/ng-file-upload.min.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/vendor/http-auth-interceptor.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/vendor/dirPagination.js')}}"></script>
 
 			<script type="text/javascript" src="{{asset('build/assets/js/app.js')}}"></script>
 			
 			<!-- Controllers -->
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/menu.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/login.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/loginModal.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/home.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/client/clientList.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/client/clientNew.js')}}"></script>
@@ -112,26 +80,33 @@
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/file/fileEdit.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/file/fileRemove.js')}}"></script>
 
-			<!-- <script type="text/javascript" src="{{asset('build/assets/js/controllers/task/taskList.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/task/taskList.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/task/taskShow.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/task/taskNew.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/task/taskEdit.js')}}"></script>
-			<script type="text/javascript" src="{{asset('build/assets/js/controllers/task/taskRemove.js')}}"></script> -->
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/task/taskRemove.js')}}"></script>
+
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/member/memberList.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/member/memberRemove.js')}}"></script>
 
 			<!-- DIRECTIVES -->
 			<script type="text/javascript" src="{{asset('build/assets/js/directives/projectFileDownload.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/directives/loginForm.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/directives/loadTemplate.js')}}"></script>
 
 			<!-- FILTERS -->
 			<script type="text/javascript" src="{{asset('build/assets/js/filters/date-br.js')}}"></script>
 
 			<!-- SERVICES -->
 			<script type="text/javascript" src="{{asset('build/assets/js/services/url.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/services/oauthFixInterceptor.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/services/client.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/services/project.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/services/file.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/services/note.js')}}"></script>
-<!-- 			<script type="text/javascript" src="{{asset('build/assets/js/services/task.js')}}"></script>
- -->			
+ 			<script type="text/javascript" src="{{asset('build/assets/js/services/task.js')}}"></script>
+ 			<script type="text/javascript" src="{{asset('build/assets/js/services/member.js')}}"></script>
+ 			
 
  			<script type="text/javascript" src="{{asset('build/assets/js/services/user.js')}}"></script>
 			

@@ -14,6 +14,11 @@ class ProjectTaskService
 	protected $repository;
 
 	/**
+	* @var IProjectRepository
+	*/
+	protected $projectRepository;
+
+	/**
 	* @var ProjectValidator
 	*/
 	protected $validator;
@@ -21,8 +26,9 @@ class ProjectTaskService
 	/**
 	*
 	*/
-	function __construct(IProjectTaskRepository $repository, ProjectTaskValidator $validator) {
+	function __construct(IProjectTaskRepository $repository,  ProjectTaskValidator $validator) {
 		$this->repository = $repository;
+		//$this->projectRepository = $projectRepository; IProjectRepository $projectRepository,
 		$this->validator = $validator;
 	}
 
@@ -36,6 +42,9 @@ class ProjectTaskService
 	
 		try {
 			$this->validator->with($data)->passesOrFail();
+/*			$project = $this->projectRepository->skipPresenter()->find($data['project_id']);
+			$projectTask = $project->tasks()->crate($data);
+			return $projectTask;*/
 			return $this->repository->create($data);
 		} catch (ValidatorException $e) {
 			return [
@@ -67,7 +76,7 @@ class ProjectTaskService
 	public function show($id, $taskId)
     {
     	try {
-    		return $this->repository->find( $taskId);
+    		return $this->repository->find($taskId);
     	} catch (ModelNotFoundException $e) {
     		return [ 'error' => true,
     			'message' => 'Tarefa não encontrada.'];
@@ -75,12 +84,12 @@ class ProjectTaskService
         
     }
 
-	public function destroy($id)
+	public function destroy($taskId)
     {
     	try {
-    		$this->repository->find($id);
-    		$this->repository->delete($id);    		
-    		return ['message'=>'Nota de Projeto removido com sucesso'];
+    		$projectTask = $this->repository->skipPresenter()->find($taskId);
+    		$projectTask->delete();    		
+    		return ['message'=>'Task de Projeto removido com sucesso'];
     	} catch (ModelNotFoundException $e) {
     		return [ 'error' => true,'message' => 'Tarefa não encontrada.'];
     	}

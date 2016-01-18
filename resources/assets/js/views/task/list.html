@@ -2,24 +2,45 @@
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
 			<div class="panel panel-default">
-				<div class="panel-heading">Listagem de Notes</div>
+				<div class="panel-heading">
+					Listagem de Tasks
+						<form name="formTask" class="form-inline pull-right col-md-10" role='form' ng-submit="save()">
+							<div class="form-group">
+								<label class="col-md-2 control-label">Name:</label>
+								<div class="col-md-6">
+									<input type="text" class="form-control" name="name" ng-model="task.name">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-6 col-md-offset-4">
+									<button type="submit" class="btn btn-primary">Salvar</button>
+								</div>
+							</div>
+						</form>
+
+				</div>
+				
 				<div class="panel-body">
-					<a href="#/project/1/notes/new" class="btn btn-success">Novo</a>
+					<a href="#/project/{{projectId}}/task/new" class="btn btn-success">Novo</a>
 					<table class="table table-hover table-bordered">
 						<thead>
 							<tr>
-								<th width="20%">Title</th>
-								<th>Note</th>
+								<th >Name</th>
+								<th >Start</th>
+								<th >Finish</th>
+								<th >Status</th>
 								<th width="10%">Actions</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="o in notes">
-								<td>{{o.title}}</td>
-								<td>{{o.note | limitTo:25}}...</td>
-								<td><a ng-href="#/project/{{o.project_id}}/notes/{{o.id}}/show" title="Show"><i class="fa fa-eye"></i></a> | 
-								<a ng-href="#/project/{{o.project_id}}/notes/{{o.id}}/edit" title="Editar"><i class="fa fa-pencil"></i></a> | 
-								<a ng-href="#/project/{{o.project_id}}/notes/{{o.id}}/remove" title="Excluir"><i class="fa fa-minus"></i></a></td>
+							<tr ng-repeat="o in tasks">
+								<td>{{o.name}}</td>
+								<td>{{o.start_date | dateBr}}</td>
+								<td>{{o.due_date | dateBr}}</td>
+								<td>{{status[o.status-1].label}}</td>
+								<td><a ng-href="#/project/{{o.project_id}}/task/{{o.id}}/show" title="Show"><i class="fa fa-eye"></i></a> | 
+								<a ng-href="#/project/{{o.project_id}}/task/{{o.id}}/edit" title="Editar"><i class="fa fa-pencil"></i></a> | 
+								<a ng-href="#/project/{{o.project_id}}/task/{{o.id}}/remove" title="Excluir"><i class="fa fa-minus"></i></a></td>
 							</tr>
 						</tbody>
 					</table>

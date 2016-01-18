@@ -26,6 +26,7 @@ class UserController extends Controller
 
         return $this->service->show($userId);
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -33,7 +34,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return $this->service->all();
     }
 
     /**
@@ -54,7 +55,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $this->service->create($request->all());
     }
 
     /**
@@ -65,7 +66,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        return $this->service->show($id);
     }
 
     /**
@@ -88,7 +89,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return $this->service->update($request->all(), $id);
     }
 
     /**
@@ -99,6 +100,6 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->service->destroy($id);
     }
 }

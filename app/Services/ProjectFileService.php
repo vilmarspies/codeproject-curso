@@ -109,7 +109,6 @@ class ProjectFileService
     		return [ 'error' => true,
     			'message' => 'File de Projeto não encontrado'];
     	}
-        
     }
 
     public function getFilePath($id)

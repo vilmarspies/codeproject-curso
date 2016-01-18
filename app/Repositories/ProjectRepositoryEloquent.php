@@ -48,6 +48,14 @@ class ProjectRepositoryEloquent extends BaseRepository implements IProjectReposi
         return false;
     }
 
+    public function findOwner($userId, $limit = null, $columns = array())
+    {
+      return $this->scopeQuery(function($query) use($userId){
+            return $query->select('projects.*')
+                  ->where('owner_id','=',$userId);
+        })->paginate($limit, $columns);
+    }
+
     public function findWithOwnerAndMember($userId)
     {
         return $this->scopeQuery(function($query) use($userId){
@@ -55,6 +63,16 @@ class ProjectRepositoryEloquent extends BaseRepository implements IProjectReposi
                   ->leftJoin('project_members','project_members.project_id','=','projects.id')
                   ->where('project_members.member_id','=', $userId)
                   ->union($this->model->query()->getQuery()->where('owner_id','=',$userId));
+        })->all();
+    }
+
+    public function findWithOwnerAndMember2($userId)
+    {
+        return $this->scopeQuery(function($query) use($userId){
+            return $query->select('projects.*')
+                  ->join('project_members','project_members.project_id','=','projects.id')
+                  ->where('project_members.member_id','=', $userId)
+                  ->union($this->model->query()->getQuery()->select('projects.*')->where('owner_id','=',$userId));
         })->all();
     }
 

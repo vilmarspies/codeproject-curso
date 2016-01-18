@@ -22,7 +22,7 @@ class UserService
 
 	public function all()
 	{
-		return $this->repository->all();
+		return $this->repository->with(['projects'])->all();
 	}
 
 	public function create(array $data)
@@ -43,7 +43,7 @@ class UserService
 	public function show($id)
     {
     	try {
-    		return $this->repository->find($id);
+    		return $this->repository->with(['projects'])->find($id);
     	} catch (ModelNotFoundException $e) {
     		return [ 'error' => true,
     			'message' => 'User não encontrado'];

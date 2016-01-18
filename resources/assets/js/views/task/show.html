@@ -18,28 +18,28 @@
 						<div class="form-group">
 							<label class="col-md-4 control-label">Start Date:</label>
 							<div class="col-md-6">
-								<label class="control-label">{{task.start_date}}</label>
+								<label class="control-label">{{task.start_date | dateBr}}</label>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label class="col-md-4 control-label">Due Date:</label>
 							<div class="col-md-6">
-								<label class="control-label">{{task.due_date}}</label>
+								<label class="control-label">{{task.due_date | dateBr}}</label>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label class="col-md-4 control-label">Status:</label>
 							<div class="col-md-6">
-								<label class="control-label">{{task.status}}</label>
+								<label class="control-label">{{status[task.status-1].label}}</label>
 							</div>
 						</div>
 
 						
 						<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">
-								<a ng-href="#/project/{{task.project_id}}/tasks/{{task.id}}/edit"><i class="fa fa-pencil"></i> Editar</a> |
+								<a ng-href="#/project/{{task.project_id}}/task/{{task.id}}/edit"><i class="fa fa-pencil"></i> Editar</a> |
 								<a ng-href="#/project/{{task.project_id}}/tasks"><i class="fa fa-backward"></i> Voltar</a>
 							</div>
 						</div>

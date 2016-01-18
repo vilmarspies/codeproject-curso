@@ -34,10 +34,21 @@
 						<div class="form-group" ng-class="{'has-error':!formTask.start_date.$valid && formTask.start_date.$touched}">
 							<label class="col-md-4 control-label">Start Date:</label>
 							<div class="col-md-6">
-							<input type="text" class="form-control"  name="start_date" ng-model="task.start_date" required>
+								<p class="input-group">
+									<input name='start_date' type="text" class="form-control"  ng-model="task.start_date" 
+										datepicker-popup="dd/MM/yyyy" 
+										is-open="start_date.status.opened" 
+
+										close-text="Close" />
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default" ng-click="openStart($event)">
+											<i class="glyphicon glyphicon-calendar"></i>
+										</button>
+									</span>
+								</p>
 
 								<div ng-messages="formTask.start_date.$error" class="help-block" ng-show="formTask.start_date.$touched">
-									<div ng-message="required">Campo obrigatório</div>
+									<div ng-message="date">Data inválida</div>
 								</div>
 							</div>
 						</div>
@@ -45,10 +56,20 @@
 						<div class="form-group" ng-class="{'has-error':!formTask.due_date.$valid && formTask.due_date.$touched}">
 							<label class="col-md-4 control-label">Due Date:</label>
 							<div class="col-md-6">
-							<input type="text" class="form-control"  name="due_date" ng-model="task.due_date" required>
+								<p class="input-group">
+									<input name='due_date' type="text" class="form-control"  ng-model="task.due_date" 
+										datepicker-popup="dd/MM/yyyy" 
+										is-open="due_date.status.opened" 
+										close-text="Close" />
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default" ng-click="openDue($event)">
+											<i class="glyphicon glyphicon-calendar"></i>
+										</button>
+									</span>
+								</p>
 
 								<div ng-messages="formTask.due_date.$error" class="help-block" ng-show="formTask.due_date.$touched">
-									<div ng-message="required">Campo obrigatório</div>
+									<div ng-message="date">Data inválida</div>
 								</div>
 							</div>
 						</div>
@@ -56,7 +77,9 @@
 						<div class="form-group" ng-class="{'has-error':!formTask.status.$valid && formTask.status.$touched}">
 							<label class="col-md-4 control-label">Status:</label>
 							<div class="col-md-6">
-							<input type="text" class="form-control"  name="status" ng-model="task.status" required>
+								<select name="status" class="form-control" ng-model='task.status' ng-options="o.value as o.label for o in status" required>
+									<option value="">Selecione um Status</option>
+								</select>
 
 								<div ng-messages="formTask.status.$error" class="help-block" ng-show="formTask.status.$touched">
 									<div ng-message="required">Campo obrigatório</div>

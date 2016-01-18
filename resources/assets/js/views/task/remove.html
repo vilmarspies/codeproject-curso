@@ -8,6 +8,9 @@
 						<p>Deseja realmente excluir esta Tarefa?</p>	
 						<ul>
 							<li><strong>Name:</strong> {{task.name}}</li>
+							<li><strong>Start Date:</strong> {{task.start_date | dateBr}}</li>
+							<li><strong>Due Date:</strong> {{task.due_date | dateBr}}</li>
+							<li><strong>Status:</strong> {{status[task.status-1].label}}</li>
 						</ul>				
 						<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">
