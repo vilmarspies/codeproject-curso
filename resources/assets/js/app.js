@@ -237,8 +237,6 @@ app.run(['$rootScope', '$location', '$http', '$cookies', '$modal', 'httpBuffer',
 		}
 	});
 
-	$rootScope.userLogado = $cookies.getObject('user');
-
     $rootScope.$on('oauth:error', function(event, data) {
       // Ignore `invalid_grant` error - should be catched on `LoginController`.
       if ('invalid_grant' === data.rejection.data.error) {
@@ -259,7 +257,7 @@ app.run(['$rootScope', '$location', '$http', '$cookies', '$modal', 'httpBuffer',
 	      	$rootScope.loginModalOpened = true;
 	    }
       	return;
-      	/*if (!$rootScope.isRefreshingToken)
+      	if (!$rootScope.isRefreshingToken)
       	{
 	      	$rootScope.isRefreshingToken = true;
 	        return OAuth.getRefreshToken().then(function(response) {
@@ -274,7 +272,7 @@ app.run(['$rootScope', '$location', '$http', '$cookies', '$modal', 'httpBuffer',
         	return $http(data.rejection.config).then(function(resp){
 	        	return data.deferred.resolve(resp);
 	        });
-        }*/
+        }
       }
 
       // Redirect to `/login` with the `error_reason`.
