@@ -31,6 +31,11 @@ class ClientService
 		return $this->repository->all();
 	}
 
+	public function paginate($limit)
+	{
+		return $this->repository->paginate($limit);
+	}
+
 	public function create(array $data)
 	{
 	

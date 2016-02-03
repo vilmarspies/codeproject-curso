@@ -15,6 +15,8 @@ class ProjectNoteTransformer extends TransformerAbstract
 	    	'project_name' => $note->project->name,
 	    	'title' => $note->title,
 	    	'note' => $note->note,
+	    	'created' => date($note->created_at),
+	    	'updated' => $note->updated_at
 		];
 	}
 }

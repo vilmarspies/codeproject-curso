@@ -31,6 +31,8 @@
     "font-awesome": "~4.5.0",
     "ng-file-upload": "7.0.17",
     "angular-http-auth": "~1.2.3",
-    "angularUtils-pagination": "angular-utils-pagination#~0.9.3"
+    "angularUtils-pagination": "angular-utils-pagination#~0.9.3",
+    "moment": "~2.11.1",
+    "lodash": "^4.2.0"
   }
 }

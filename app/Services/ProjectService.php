@@ -37,10 +37,16 @@ class ProjectService
         $this->userId = Authorizer::getResourceOwnerId();
 	}
 
-	public function all()
+	public function all($limit)
     {
-        return $this->repository->findWithOwnerAndMember2($this->userId);
-        return $this->repository->findOwner($this->userId);
+        //return $this->repository->findWithOwnerAndMember2($this->userId);
+        return $this->repository->findOwner($this->userId, $limit);
+    }
+
+    public function allMember($limit)
+    {
+        //return $this->repository->findWithOwnerAndMember2($this->userId);
+        return $this->repository->findMembers($this->userId, $limit );
     }
 
 	public function store(array $data)

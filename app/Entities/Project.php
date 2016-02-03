@@ -32,7 +32,7 @@ class Project extends Model  implements Transformable
 
     public function notes()
     {
-        return $this->hasMany(ProjectNote::class);
+        return $this->hasMany(ProjectNote::class)->orderBy('created_at', 'desc');
     }
 
     public function tasks()
@@ -42,7 +42,7 @@ class Project extends Model  implements Transformable
 
     public function members()
     {
-        return $this->belongsToMany(User::class, 'project_members', 'project_id', 'member_id');
+        return $this->belongsToMany(User::class, 'project_members', 'project_id', 'member_id')->withPivot('id');
     }
 
     public function files()

@@ -7,10 +7,11 @@
 	<title>Laravel</title>
 	
 	@if(Config::get('app.debug'))
-		<link rel="stylesheet" type="text/css" href="{{asset('build/assets/css/app.css')}}">
-		<link rel="stylesheet" type="text/css" href="{{asset('build/assets/css/components.css')}}">
+		
 		<link rel="stylesheet" type="text/css" href="{{asset('build/assets/css/flaticon.css')}}">
 		<link rel="stylesheet" type="text/css" href="{{asset('build/assets/css/font-awesome.css')}}">
+		<link rel="stylesheet" type="text/css" href="{{asset('build/assets/css/components.css')}}">
+		<link rel="stylesheet" type="text/css" href="{{asset('build/assets/css/app.css')}}">
 	@else
 		<link rel="stylesheet" type="text/css" href="{{elixir('assets/css/all.css')}}">
 	@endif
@@ -31,6 +32,16 @@
 
 <div ng-view></div>
 
+<footer class="footer-global">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="text-center">&copy; Project Manager - 2015</div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
 	<!-- Scripts -->
 	@if(Config::get('app.debug'))
 			<script type="text/javascript" src="{{asset('build/assets/js/vendor/jquery.min.js')}}"></script>
@@ -48,20 +59,24 @@
 			<script type="text/javascript" src="{{asset('build/assets/js/vendor/ng-file-upload.min.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/vendor/http-auth-interceptor.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/vendor/dirPagination.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/vendor/moment-with-locales.min.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/vendor/lodash.min.js')}}"></script>
 
 			<script type="text/javascript" src="{{asset('build/assets/js/app.js')}}"></script>
 			
 			<!-- Controllers -->
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/menu.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/login.js')}}"></script>
-			<script type="text/javascript" src="{{asset('build/assets/js/controllers/loginModal.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/refreshModal.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/home.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/client/clientDashboard.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/client/clientList.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/client/clientNew.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/client/clientEdit.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/client/clientView.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/client/clientRemove.js')}}"></script>
 
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/project/projectDashboard.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/project/projectList.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/project/projectShow.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/project/projectNew.js')}}"></script>
@@ -88,14 +103,19 @@
 
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/member/memberList.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/controllers/member/memberRemove.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/controllers/member/projectMemberDashboard.js')}}"></script>
 
 			<!-- DIRECTIVES -->
 			<script type="text/javascript" src="{{asset('build/assets/js/directives/projectFileDownload.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/directives/loginForm.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/directives/loadTemplate.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/directives/menuActivated.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/directives/tabProject.js')}}"></script>
 
 			<!-- FILTERS -->
 			<script type="text/javascript" src="{{asset('build/assets/js/filters/date-br.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/filters/dateMoment.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/filters/dateDiaMes.js')}}"></script>
 
 			<!-- SERVICES -->
 			<script type="text/javascript" src="{{asset('build/assets/js/services/url.js')}}"></script>

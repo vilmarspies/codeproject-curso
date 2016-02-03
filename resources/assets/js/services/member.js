@@ -4,6 +4,10 @@ angular.module('app.services')
 		return $resource(appConfig.baseUrl + '/project/:id/member/:memberId', {id: '@id', memberId:'@memberId'},{
 			update: {
 				method: 'PUT',
+			},
+			query: {
+				url: appConfig.baseUrl+ '/project/projectmembers',
+				method: 'GET'
 			}
 		});
 	}]);

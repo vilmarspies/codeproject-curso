@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
 			<div class="panel panel-default">
-				<div class="panel-heading">Listagem de Notes</div>
+				<div class="panel-heading">Listagem de Projetos</div>
 				<div class="panel-body">
 					<a href="#/project/new" class="btn btn-success">Novo</a>
 					<table class="table table-hover table-bordered">
@@ -19,7 +19,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="o in projects">
+							<tr dir-paginate="o in projects | itemsPerPage: pagination.perPage" total-items="pagination.total" current-page="pagination.current">
 								<td><i class="fa fa-check" ng-show="{{o.is_member}}"></i></td>
 								<td>{{o.client.name}}</td>
 								<td>{{o.name}}</td>
@@ -31,7 +31,7 @@
 										</div>
 									</div>
 								</td>
-								<td>{{status[o.status-1].label}} - {{o.status}}</td>
+								<td>{{status[o.status-1].label}}</td>
 								<td>{{o.due_date | dateBr}}</td>
 								<td><a ng-href="#/project/{{o.id}}/notes" title="Notes"><i class="fa fa-comment"></i></a> | 
 								<a ng-href="#/project/{{o.id}}/tasks" title="Tasks"><i class="fa fa-tasks"></i></a> | 
@@ -41,6 +41,7 @@
 							</tr>
 						</tbody>
 					</table>
+					<dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
 				</div>
 			</div>
 		</div>

@@ -24,12 +24,17 @@ Route::group(['middleware'=>'oauth'], function ()
 	Route::resource('client', 'ClientController', ['except' =>['create','edit']]);
 
 	//Route::group(['middleware'=>'isOwnerProject'], function(){
+		Route::get('project/projectmembers','ProjectController@allMembers');
 		Route::resource('project', 'ProjectController', ['except' =>['create','edit']]);
+
 	//});
 		Route::resource('project.member', 'ProjectMemberController', ['except' =>['create','edit','update']]);
 
+
+
 	Route::group(['middleware'=>'check-project-permission','prefix'=>'project'], function()
 	{
+
 		Route::get('{id}/note', 'ProjectNoteController@index');
 		Route::get('{id}/note/{noteId}', 'ProjectNoteController@show');
 		Route::post('{id}/note', 'ProjectNoteController@store');

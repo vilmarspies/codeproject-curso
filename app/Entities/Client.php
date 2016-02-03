@@ -21,6 +21,6 @@ class Client extends Model  implements Transformable
 
     public function projects()
     {
-    	return $this->hasMany('Project');
+    	return $this->hasMany(Project::class);
     }
 }

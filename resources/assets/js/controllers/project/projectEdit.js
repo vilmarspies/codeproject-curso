@@ -1,5 +1,5 @@
 angular.module('app.controllers')
-	.controller('ProjectEditController', ['$scope', '$location', '$routeParams', '$cookies' ,'Project', 'Client', 'appConfig',
+	.controller('ProjectEditController', ['$scope', '$location', '$routeParams', '$cookies','Project', 'Client', 'appConfig',
 				function($scope, $location, $routeParams, $cookies, Project, Client, appConfig){
 		Project.get({id: $routeParams.id},function (data) {
 			$scope.project = data;
@@ -22,8 +22,8 @@ angular.module('app.controllers')
 		$scope.save = function () {
 			if ($scope.formProject.$valid){
 				$scope.project.owner_id = $cookies.getObject('user').id;
-				Project.update({id:$scope.project.id}, $scope.project, function(){
-					$location.path('/projects');
+				Project.update({id:$scope.project.id}, $scope.project, function(data){
+					$location.path('/projects/dashboard');
 				});
 			}
 		};

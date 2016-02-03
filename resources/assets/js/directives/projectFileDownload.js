@@ -3,6 +3,9 @@ angular.module('app.directives')
 	['$timeout','appConfig', 'ProjectFile', function($timeout, appConfig, ProjectFile){
 		return {
 			restrict: 'E', 
+			scope: {
+				file: '='
+		    },
 			templateUrl: appConfig.baseUrl + '/build/assets/views/templates/projectFileDownload.html',
 			link: function (scope, element, attrs) {
 				var anchor = element.children()[0];
@@ -17,9 +20,7 @@ angular.module('app.directives')
 						download: data.name
 					});
 					$timeout(function(){
-						scope.downloadFile=function() {
-							
-						};
+						scope.downloadFile = function() {};
 						$(anchor)[0].click();
 					});
 				});
@@ -29,6 +30,7 @@ angular.module('app.directives')
 					var anchor = $element.children()[0];
 					$(anchor).addClass('disabled');
 					var i = $(anchor).children();
+					$(anchor).append($attrs.nameFile);
 					$(i).addClass('fa-spinner').removeClass('fa-download');
 
 					ProjectFile.download({id:$attrs.idProject,fileId:$attrs.idFile},function(data) {

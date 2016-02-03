@@ -1,6 +1,7 @@
 var app = angular.module('app', ['ngRoute','angular-oauth2',
 									'app.controllers', 'app.filters', 'app.services', 'app.directives',
-									'ui.bootstrap.typeahead', 'ui.bootstrap.datepicker', 'ui.bootstrap.tpls', 'ui.bootstrap.modal', 'ui.bootstrap.dropdown',
+									'ui.bootstrap.typeahead', 'ui.bootstrap.datepicker', 'ui.bootstrap.tpls', 'ui.bootstrap.modal', 
+									'ui.bootstrap.dropdown',
 									'ngFileUpload', 'http-auth-interceptor', 'angularUtils.directives.dirPagination',
 									'mgcrea.ngStrap.navbar',
 ]);
@@ -19,7 +20,7 @@ app.provider('appConfig', ['$httpParamSerializerProvider', function($httpParamSe
 				{value: 2, label:'Iniciado'},
 				{value: 3, label:'Concluido'}
 			]
-		},
+		},	
 		task: {
 			status: [
 				{value: 1, label:'Não Iniciada'},
@@ -41,7 +42,7 @@ app.provider('appConfig', ['$httpParamSerializerProvider', function($httpParamSe
 				var headersGetter = headers();
 				if (headersGetter['content-type'] == 'application/json' || headersGetter['content-type']=='text/json'){
 					var dataJson = JSON.parse(data);
-					if(dataJson.hasOwnProperty('data')){
+					if(dataJson.hasOwnProperty('data') && Object.keys(dataJson).length == 1){
 						dataJson = dataJson.data;
 					}
 					return dataJson;
@@ -88,53 +89,75 @@ app.config(['$routeProvider', '$httpProvider', 'OAuthProvider', 'OAuthTokenProvi
 		})
 		.when('/home',{
 			templateUrl: 'build/assets/views/home.html',
-			controller: 'HomeController'
+			controller: 'HomeController',
+			title:'Home'
 		})
 		.when('/',{
 			templateUrl: 'build/assets/views/home.html',
-			controller: 'HomeController'
+			controller: 'HomeController',
+			title:'Home'
+		})
+		.when('/clients/dashboard',{
+			templateUrl: 'build/assets/views/client/dashboard.html',
+			controller: 'ClientDashboardController',
+			title:'Clients'
 		})
 		.when('/clients',{
 			templateUrl: 'build/assets/views/client/list.html',
-			controller: 'ClientListController'
+			controller: 'ClientListController',
+			title:'Clients'
 		})
 		.when('/client/new',{
 			templateUrl: 'build/assets/views/client/new.html',
-			controller: 'ClientNewController'
+			controller: 'ClientNewController',
+			title:'Clients'
 		})
 		.when('/client/:id/show',{
 			templateUrl: 'build/assets/views/client/view.html',
-			controller: 'ClientViewController'
+			controller: 'ClientViewController',
+			title:'Clients'
 		})
 		
 		.when('/client/:id/edit',{
 			templateUrl: 'build/assets/views/client/edit.html',
-			controller: 'ClientEditController'
+			controller: 'ClientEditController',
+			title:'Clients'
 		})
 		.when('/client/:id/remove',{
 			templateUrl: 'build/assets/views/client/remove.html',
-			controller: 'ClientRemoveController'
+			controller: 'ClientRemoveController',
+			title:'Clients'
+		})
+		.when('/projects/dashboard',{
+			templateUrl: 'build/assets/views/project/dashboard.html',
+			controller: 'ProjectDashboardController',
+			title:'Projects'
 		})
 		//ProjectNote LIST
 		.when('/projects',{
 			templateUrl: 'build/assets/views/project/list.html',
-			controller: 'ProjectListController'
+			controller: 'ProjectListController',
+			title:'Projects'
 		})//Project NEW
 		.when('/project/new',{
 			templateUrl: 'build/assets/views/project/new.html',
-			controller: 'ProjectNewController'
+			controller: 'ProjectNewController',
+			title:'Projects'
 		})//Project SHOW
 		.when('/project/:id/show',{
 			templateUrl: 'build/assets/views/project/show.html',
-			controller: 'ProjectShowController'
+			controller: 'ProjectShowController',
+			title:'Projects'
 		})//Project EDIT 
 		.when('/project/:id/edit',{
 			templateUrl: 'build/assets/views/project/edit.html',
-			controller: 'ProjectEditController'
+			controller: 'ProjectEditController',
+			title:'Projects'
 		})//Project REMOVE
 		.when('/project/:id/remove',{
 			templateUrl: 'build/assets/views/project/remove.html',
-			controller: 'ProjectRemoveController'
+			controller: 'ProjectRemoveController',
+			title:'Projects'
 		})
 		//ProjectNote LIST
 		.when('/project/:id/notes',{
@@ -209,6 +232,11 @@ app.config(['$routeProvider', '$httpProvider', 'OAuthProvider', 'OAuthTokenProvi
 		.when('/project/:id/member/:memberId/remove',{
 			templateUrl: 'build/assets/views/member/remove.html',
 			controller: 'ProjectMemberRemoveController'
+		})
+		.when('/project/member/dashboard',{
+			templateUrl: 'build/assets/views/member/dashboard.html',
+			controller: 'ProjectMemberDashboardController',
+			title:'Projects'
 		});
 
 		OAuthProvider.configure({
@@ -237,6 +265,16 @@ app.run(['$rootScope', '$location', '$http', '$cookies', '$modal', 'httpBuffer',
 		}
 	});
 
+	$rootScope.$on('$routeChangeSuccess', function(event, current, previous){
+		$rootScope.pageTitle = current.$$route.title;
+	});
+
+	$rootScope.$on('code403', function(event,data){
+		var modalInstance = $modal.open({
+            templateUrl: 'build/assets/views/templates/errorDialog.html'
+        });
+	});
+
     $rootScope.$on('oauth:error', function(event, data) {
       // Ignore `invalid_grant` error - should be catched on `LoginController`.
       if ('invalid_grant' === data.rejection.data.error) {
@@ -249,14 +287,23 @@ app.run(['$rootScope', '$location', '$http', '$cookies', '$modal', 'httpBuffer',
       	httpBuffer.append(data.rejection.config, data.deferred);
 
       	if (!$rootScope.loginModalOpened){
-	      	var modalInstance = $modal.open({
+
+      		var modalInstance = $modal.open({
+                    templateUrl: 'build/assets/views/templates/refreshModal.html',
+                    controller: 'RefreshModalController'
+                });
+
+	      	/*var modalInstance = $modal.open({
 	      		templateUrl: 'build/assets/views/templates/loginModal.html',
 	      		controller: 'LoginModalController'
 
-	      	});
+	      	});*/
+
 	      	$rootScope.loginModalOpened = true;
 	    }
+
       	return;
+      	
       	if (!$rootScope.isRefreshingToken)
       	{
 	      	$rootScope.isRefreshingToken = true;

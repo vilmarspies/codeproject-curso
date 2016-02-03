@@ -16,17 +16,22 @@ class ProjectController extends Controller
 
     function __construct(ProjectService $service) {
         $this->service = $service;
-        $this->middleware('check-project-owner',['except'=>['index', 'store','show']]);
-        $this->middleware('check-project-permission',['except'=>['index','store','update','destroy']]);
+        $this->middleware('check-project-owner',['except'=>['index', 'store','show','allMembers']]);
+        $this->middleware('check-project-permission',['except'=>['index','store','update','destroy', 'allMembers']]);
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->service->all();
+        return $this->service->all($request->query->get('limit'));
+    }
+
+    public function allMembers(Request $request)
+    {
+        return $this->service->allMember($request->query->get('limit'));
     }
 
     /**

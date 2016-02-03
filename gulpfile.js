@@ -28,7 +28,9 @@ configCode.vendor_path_js = [
 	configCode.bower_path + '/angular-oauth2/dist/angular-oauth2.min.js',
 	configCode.bower_path + '/ng-file-upload/ng-file-upload.min.js',
 	configCode.bower_path + '/angular-http-auth/src/http-auth-interceptor.js',
-	configCode.bower_path + '/angularUtils-pagination/dirPagination.js'
+	configCode.bower_path + '/angularUtils-pagination/dirPagination.js',
+	configCode.bower_path + '/moment/min/moment-with-locales.min.js',
+	configCode.bower_path + '/lodash/dist/lodash.min.js'
 ];
 
 configCode.build_path_css = configCode.build_path+'/css';
