@@ -117,7 +117,7 @@
                                                     <li ng-repeat="t in project.tasks.data">
                                                         <label>
                                                             <input type="checkbox" name="" id="{{t.id}}" ng-checked="t.status==3"
-                                                            ng-disabled="t.status==3" ng-click="taskClicked(t)"/>
+                                                            ng-disabled="t.status==3" ng-click="updateTask(t)"/>
                                                             <span class="status" 
                                                                 ng-class="{'text-info':t.status==1, 'text-warning':t.status==2, 'text-success':t.status==3}">
                                                                     {{t.name}}
@@ -215,28 +215,6 @@
                                             </div> <!-- /notes-list -->
                                         </div>
                                         <div role="tabpanel" class="tab-pane" id="membros">
-                                            <div class="" ng-show="project.members.data">
-                                                <div >
-                                                    <form name="formMember" class="form-inline" role='form' ng-submit="saveMember()">
-                                                        <div class="form-group">
-                                                            <label class="col-md-2 control-label">Name:</label>
-                                                            <div class="col-md-6">
-                                                                <input type="text" name="member_id" class="form-control" 
-                                                                ng-model="userSelected" required
-                                                                typeahead="u as u.name for u in getUsers($viewValue)|limitTo:10"
-                                                                typeahead-input-formatter="formatName($model)"
-                                                                typeahead-on-select="selectUser($item)"
-                                                                typeahead-editable='false' required/>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <div class="col-md-6 col-md-offset-4">
-                                                                <button type="submit" class="btn btn-primary">Salvar</button>
-                                                            </div>
-                                                        </div>
-                                                    </form><br>
-                                                </div>
-                                            </div>
                                             <div class="task-list">
                                                 <ul class="task-list-body">
                                                     <li ng-repeat="m in project.members.data">

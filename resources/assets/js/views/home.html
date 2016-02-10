@@ -13,21 +13,17 @@
                                     <div class="tools">
                                         <div>
                                             <label class="select-styled select-styled-default select-styled-sm">
-                                                <select>
-                                                    <option selected="selected">Todos</option>
-                                                    <option>Nome do projeto</option>
-                                                    <option>Nome do projeto2</option>
-                                                    <option>Nome do projeto3</option>
-                                                    <option>Nome do projeto4</option>
-                                                    <option>Nome do projeto5</option>
-                                                </select>
+                                            <select name="project"  ng-model='project' ng-options="o as o.name for o in projects" ng-change="changed()">
+                                            <option value="">Todos</option>
+                                </select>
+                                                
                                             </label>
                                         </div>
                                         <div class="btn-group">
-                                            <a href="" class="btn btn-default btn-sm">
+                                            <a href="" class="btn btn-default btn-sm" ng-click="grade=true">
                                                 <i class="fa fa-th"></i>
                                             </a>
-                                            <a href="" class="btn btn-default btn-sm">
+                                            <a href="" class="btn btn-default btn-sm" ng-click="grade=false">
                                                 <i class="fa fa-align-justify"></i>
                                             </a>
                                         </div>
@@ -41,7 +37,7 @@
                         </header> <!-- /header-internal -->
 
                         <div class="row">
-                            <div class="col-sm-4" ng-repeat="p in projects">
+                            <div class="col-sm-4" ng-repeat="p in projectsSelected" ng-show="grade">
                                 <div class="panel panel-default panel-stacked">
                                     <div class="panel-heading bg-white no-border-bottom text-boulder">
                                         <h3 class="h4 text-boulder">{{p.name}}</h3>
@@ -102,17 +98,17 @@
                                     </div> <!-- /panel-footer panel-footer-xs sazerac -->
                                 </div> <!-- /panel.panel-default -->
                             </div>
-                            <div class="col-sm-4">
+                            <!-- div class="col-sm-4">
                                 <div class="panel panel-default panel-stacked">
                                     <div class="panel-heading bg-white no-border-bottom text-boulder">
                                         <h3 class="h4 text-boulder">Nome do projeto2</h3>
                                         <small class="text-upper text-silver">Cliente empresa</small>
-                                    </div> <!-- /panel-heading bg-white -->
+                                    </div> /panel-heading bg-white
                                     <div class="panel-body">
                                         <ul class="list-unstyled list-padding text-boulder">
                                             <li class="clearfix">
                                                 Progresso:
-
+                            
                                                 <div class="radial-progress radial-progress-xs radial-progress-warning progresso-inline pull-right" data-progress="1">
                                                     <div class="circle">
                                                         <div class="mask full">
@@ -133,7 +129,7 @@
                                             </li>
                                             <li class="clearfix">
                                                 Progresso esperado:
-
+                            
                                                 <div class="radial-progress radial-progress-xs radial-progress-warning progresso-inline pull-right" data-progress="90">
                                                     <div class="circle">
                                                         <div class="mask full">
@@ -155,25 +151,25 @@
                                             <li>
                                                 Prazo: <span class="pull-right text-orange">Jul 20</span>
                                             </li>
-                                        </ul> <!-- /panel-list-unstyled -->
-                                    </div> <!-- /panel-body -->
+                                        </ul> /panel-list-unstyled
+                                    </div> /panel-body
                                     <div class="panel-footer panel-footer-xs no-border-top sazerac text-success font-bold">
                                         <i class="fa fa-circle"></i> Iniciado
                                         <span class="pull-right">+100</span>
-                                    </div> <!-- /panel-footer panel-footer-xs sazerac -->
-                                </div> <!-- /panel.panel-default -->
+                                    </div> /panel-footer panel-footer-xs sazerac
+                                </div> /panel.panel-default
                             </div>
                             <div class="col-sm-4">
                                 <div class="panel panel-default panel-stacked">
                                     <div class="panel-heading bg-white no-border-bottom text-boulder">
                                         <h3 class="h4 text-boulder">Nome do projeto3</h3>
                                         <small class="text-upper text-silver">Cliente empresa</small>
-                                    </div> <!-- /panel-heading bg-white -->
+                                    </div> /panel-heading bg-white
                                     <div class="panel-body">
                                         <ul class="list-unstyled list-padding text-boulder">
                                             <li class="clearfix">
                                                 Progresso:
-
+                            
                                                 <div class="radial-progress radial-progress-xs radial-progress-warning progresso-inline pull-right" data-progress="35">
                                                     <div class="circle">
                                                         <div class="mask full">
@@ -194,7 +190,7 @@
                                             </li>
                                             <li class="clearfix">
                                                 Progresso esperado:
-
+                            
                                                 <div class="radial-progress radial-progress-xs radial-progress-warning progresso-inline pull-right" data-progress="90">
                                                     <div class="circle">
                                                         <div class="mask full">
@@ -216,25 +212,25 @@
                                             <li>
                                                 Prazo: <span class="pull-right text-orange">Jul 20</span>
                                             </li>
-                                        </ul> <!-- /panel-list-unstyled -->
-                                    </div> <!-- /panel-body -->
+                                        </ul> /panel-list-unstyled
+                                    </div> /panel-body
                                     <div class="panel-footer panel-footer-xs no-border-top sazerac text-success font-bold">
                                         <i class="fa fa-circle"></i> Iniciado
                                         <span class="pull-right">+100</span>
-                                    </div> <!-- /panel-footer panel-footer-xs sazerac -->
-                                </div> <!-- /panel.panel-default -->
+                                    </div> /panel-footer panel-footer-xs sazerac
+                                </div> /panel.panel-default
                             </div>
                             <div class="col-sm-4">
                                 <div class="panel panel-default panel-stacked">
                                     <div class="panel-heading bg-white no-border-bottom text-boulder">
                                         <h3 class="h4 text-boulder">Nome do projeto4</h3>
                                         <small class="text-upper text-silver">Cliente empresa</small>
-                                    </div> <!-- /panel-heading bg-white -->
+                                    </div> /panel-heading bg-white
                                     <div class="panel-body">
                                         <ul class="list-unstyled list-padding text-boulder">
                                             <li class="clearfix">
                                                 Progresso:
-
+                            
                                                 <div class="radial-progress radial-progress-xs radial-progress-warning progresso-inline pull-right" data-progress="35">
                                                     <div class="circle">
                                                         <div class="mask full">
@@ -255,7 +251,7 @@
                                             </li>
                                             <li class="clearfix">
                                                 Progresso esperado:
-
+                            
                                                 <div class="radial-progress radial-progress-xs radial-progress-warning progresso-inline pull-right" data-progress="90">
                                                     <div class="circle">
                                                         <div class="mask full">
@@ -277,25 +273,25 @@
                                             <li>
                                                 Prazo: <span class="pull-right text-orange">Jul 20</span>
                                             </li>
-                                        </ul> <!-- /panel-list-unstyled -->
-                                    </div> <!-- /panel-body -->
+                                        </ul> /panel-list-unstyled
+                                    </div> /panel-body
                                     <div class="panel-footer panel-footer-xs no-border-top sazerac text-success font-bold">
                                         <i class="fa fa-circle"></i> Iniciado
                                         <span class="pull-right">+100</span>
-                                    </div> <!-- /panel-footer panel-footer-xs sazerac -->
-                                </div> <!-- /panel.panel-default -->
+                                    </div> /panel-footer panel-footer-xs sazerac
+                                </div> /panel.panel-default
                             </div>
                             <div class="col-sm-4">
                                 <div class="panel panel-default panel-stacked">
                                     <div class="panel-heading bg-white no-border-bottom text-boulder">
                                         <h3 class="h4 text-boulder">Nome do projeto5</h3>
                                         <small class="text-upper text-silver">Cliente empresa</small>
-                                    </div> <!-- /panel-heading bg-white -->
+                                    </div> /panel-heading bg-white
                                     <div class="panel-body">
                                         <ul class="list-unstyled list-padding text-boulder">
                                             <li class="clearfix">
                                                 Progresso:
-
+                            
                                                 <div class="radial-progress radial-progress-xs radial-progress-warning progresso-inline pull-right" data-progress="35">
                                                     <div class="circle">
                                                         <div class="mask full">
@@ -316,7 +312,7 @@
                                             </li>
                                             <li class="clearfix">
                                                 Progresso esperado:
-
+                            
                                                 <div class="radial-progress radial-progress-xs radial-progress-warning progresso-inline pull-right" data-progress="90">
                                                     <div class="circle">
                                                         <div class="mask full">
@@ -338,14 +334,75 @@
                                             <li>
                                                 Prazo: <span class="pull-right text-orange">Jul 20</span>
                                             </li>
-                                        </ul> <!-- /panel-list-unstyled -->
-                                    </div> <!-- /panel-body -->
+                                        </ul> /panel-list-unstyled
+                                    </div> /panel-body
                                     <div class="panel-footer panel-footer-xs no-border-top sazerac text-danger font-bold">
                                         <i class="fa fa-circle"></i> Atrasado
                                         <span class="pull-right">-30</span>
+                                    </div> /panel-footer panel-footer-xs sazerac
+                                </div> /panel.panel-default
+                            </div> -->
+                        </div>
+                        <div class="col-sm-12" ng-repeat="p in projectsSelected" ng-show="!grade">
+                            <div class="panel panel-default panel-stacked">
+                                    <div class="panel-heading bg-white no-border-bottom text-boulder">
+                                        <h3 class="h4 text-boulder">{{p.name}}</h3>
+                                        <small class="text-upper text-silver">{{p.client.name}}</small>
+                                    </div> <!-- /panel-heading bg-white -->
+                                    <div class="panel-body">
+                                        <ul class="list-unstyled list-padding text-boulder">
+                                            <li class="clearfix">
+                                                Progresso:
+
+                                                <div class="radial-progress radial-progress-xs radial-progress-warning progresso-inline pull-right" data-progress="{{p.progress}}">
+                                                    <div class="circle">
+                                                        <div class="mask full">
+                                                            <div class="fill"></div>
+                                                        </div>
+                                                        <div class="mask half">
+                                                            <div class="fill"></div>
+                                                            <div class="fill fix"></div>
+                                                        </div>
+                                                        <div class="shadow"></div>
+                                                    </div>
+                                                    <div class="inset">
+                                                        <div class="percentage">
+                                                            <div class="numbers">{{p.progress}}%</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="clearfix">
+                                                Progresso esperado:
+
+                                                <div class="radial-progress radial-progress-xs radial-progress-warning progresso-inline pull-right" data-progress="100">
+                                                    <div class="circle">
+                                                        <div class="mask full">
+                                                            <div class="fill"></div>
+                                                        </div>
+                                                        <div class="mask half">
+                                                            <div class="fill"></div>
+                                                            <div class="fill fix"></div>
+                                                        </div>
+                                                        <div class="shadow"></div>
+                                                    </div>
+                                                    <div class="inset">
+                                                        <div class="percentage">
+                                                            <div class="numbers">100%</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                Prazo: <span class="pull-right text-orange">{{p.due_date | dateDiaMes}}</span>
+                                            </li>
+                                        </ul> <!-- /panel-list-unstyled -->
+                                    </div> <!-- /panel-body -->
+                                    <div class="panel-footer panel-footer-xs no-border-top sazerac font-bold" ng-class="{'text-info': p.status==1, 'text-success': p.status==2,'text-danger': p.status==3}">
+                                        <i class="fa fa-circle"></i> {{status[p.status-1].label}}
+                                        <span class="pull-right">+{{p.tasks_opened}}</span>
                                     </div> <!-- /panel-footer panel-footer-xs sazerac -->
                                 </div> <!-- /panel.panel-default -->
-                            </div>
                         </div>
                     </div>
                     <div class="col-xs-3">

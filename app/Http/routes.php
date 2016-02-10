@@ -24,7 +24,8 @@ Route::group(['middleware'=>'oauth'], function ()
 	Route::resource('client', 'ClientController', ['except' =>['create','edit']]);
 
 	//Route::group(['middleware'=>'isOwnerProject'], function(){
-		Route::get('project/projectmembers','ProjectController@allMembers');
+		Route::get('project/projectmembers','ProjectController@indexMembers');
+		Route::get('project/all','ProjectController@all');
 		Route::resource('project', 'ProjectController', ['except' =>['create','edit']]);
 
 	//});

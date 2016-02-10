@@ -9,8 +9,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 
 
-
-
 class ProjectService
 {
 	/**
@@ -37,16 +35,21 @@ class ProjectService
         $this->userId = Authorizer::getResourceOwnerId();
 	}
 
-	public function all($limit)
+	public function index($limit)
     {
         //return $this->repository->findWithOwnerAndMember2($this->userId);
         return $this->repository->findOwner($this->userId, $limit);
     }
 
-    public function allMember($limit)
+    public function indexMember($limit)
     {
         //return $this->repository->findWithOwnerAndMember2($this->userId);
         return $this->repository->findMembers($this->userId, $limit );
+    }
+
+    public function all()
+    {
+        return $this->repository->findWithOwnerAndMember($this->userId);
     }
 
 	public function store(array $data)

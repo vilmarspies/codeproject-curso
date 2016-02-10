@@ -75,16 +75,6 @@ class ProjectRepositoryEloquent extends BaseRepository implements IProjectReposi
         })->all();
     }
 
-    public function findWithOwnerAndMember2($userId)
-    {
-        return $this->scopeQuery(function($query) use($userId){
-            return $query->select('projects.*')
-                  ->join('project_members','project_members.project_id','=','projects.id')
-                  ->where('project_members.member_id','=', $userId)
-                  ->union($this->model->query()->getQuery()->select('projects.*')->where('owner_id','=',$userId));
-        })->all();
-    }
-
     public function presenter()
     {
         return ProjectPresenter::class;

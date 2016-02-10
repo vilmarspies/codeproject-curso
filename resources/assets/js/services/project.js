@@ -31,6 +31,11 @@ angular.module('app.services')
 			update: {
 				method: 'PUT',
 				transformRequest: transformData
+			},
+			all: {
+				url: appConfig.baseUrl+ '/project/all',
+				method: 'GET',
+				isArray: true
 			}
 		});
 	}]);

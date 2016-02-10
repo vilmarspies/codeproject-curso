@@ -1,13 +1,13 @@
 angular.module('app.controllers')
-	.controller('ProjectListController', ['$scope', '$routeParams','Project', 'ProjectMember', 'appConfig',
-		function($scope, $routeParams, Project, ProjectMember, appConfig){
+	.controller('ProjectListController', ['$scope', '$routeParams','Project',  'appConfig',
+		function($scope, $routeParams, Project, appConfig){
 		
 		$scope.projects = [];
 
 	    $scope.pagination = {
 	        current: 1,
 	        total: 0,
-	        perPage:5,
+	        perPage:10,
 	        paginated: []
 	    };
 
@@ -17,36 +17,18 @@ angular.module('app.controllers')
 	        $scope.projects = $scope.pagination.paginated[newPage-1]; 
 	    };
 
-	    $scope.previous = function(evt)
-	    {
-	    	evt.preventDefault();
-	    }
+	    function getProjects() {
+	    	Project.all({},function(data){
+	    		var ttlprojects = data;
+	    		$scope.pagination.total = data.length;
+	    		ttlprojects = _.orderBy(ttlprojects, ['client.name'],['asc']);
+				$scope.pagination.paginated = _.chunk(ttlprojects, $scope.pagination.perPage);
+				$scope.projects = $scope.pagination.paginated[0]; 
 
-	    $scope.previous = function(evt)
-	    {
-	    	evt.preventDefault();	
-	    }
-
-		function getResultsPage() {
-			Project.query({
-				limit: null
-			},function(data){
-				$scope.projects = data.data;
-				ProjectMember.query({
-					limit: null
-				},function(data){
-					var ttlprojects = _.concat($scope.projects, data.data);
-					$scope.pagination.total = ttlprojects.length;
-					ttlprojects = _.orderBy(ttlprojects, ['client.name'],['asc']);
-					$scope.pagination.paginated = _.chunk(ttlprojects, $scope.pagination.perPage);
-					$scope.projects = $scope.pagination.paginated[0]; 
-				});
-			});
-
-
+				console.log($scope.pagination.total);
+	    	});
 	    };
 
-		getResultsPage();
-
+		getProjects();
 
 	}]);

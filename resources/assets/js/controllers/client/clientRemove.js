@@ -5,11 +5,11 @@ angular.module('app.controllers')
 
 		$scope.remove = function () {
 			$scope.client.$delete().then(function() {
-				$location.path('/clients');
+				$location.path('/clients/dashboard');
 			});
 		};
 
 		$scope.cancelar = function() {
-			$location.path('/clients');
+			$location.path('/clients/dashboard');
 		};
 	}]);

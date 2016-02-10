@@ -1,6 +1,6 @@
 angular.module('app.controllers')
-	.controller('ProjectDashboardController', ['$scope', '$routeParams','Project', 'appConfig', 'ProjectMember', 'User',
-		function($scope, $routeParams, Project, appConfig, ProjectMember, User){
+	.controller('ProjectDashboardController', ['$scope', '$routeParams','Project', 'appConfig', 'ProjectMember', 'ProjectTask', 'User',
+		function($scope, $routeParams, Project, appConfig, ProjectMember, ProjectTask, User){
 		$scope.project = {};
 		$scope.member = new ProjectMember();
 
@@ -18,10 +18,6 @@ angular.module('app.controllers')
 
 		$scope.showProject = function(selected){
 			$scope.project = selected;
-		}
-
-		$scope.taskClicked = function(id){
-			console.log(id)
 		}
 
 		$scope.saveMember = function () {
@@ -61,5 +57,14 @@ angular.module('app.controllers')
 
 		$scope.selectUser = function (item) {
 			$scope.member.member_id = item.id;
+		};
+
+		$scope.updateTask = function (task) {
+			task.status = 3;
+			task.due_date = new Date();
+			ProjectTask.update({id:task.project_id, taskId:task.id}, task, function(){
+				//$location.path('/project/'+ $scope.task.project_id + '/tasks');
+			});
+			
 		};
 	}]);

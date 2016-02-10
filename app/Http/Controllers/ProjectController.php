@@ -16,8 +16,8 @@ class ProjectController extends Controller
 
     function __construct(ProjectService $service) {
         $this->service = $service;
-        $this->middleware('check-project-owner',['except'=>['index', 'store','show','allMembers']]);
-        $this->middleware('check-project-permission',['except'=>['index','store','update','destroy', 'allMembers']]);
+        $this->middleware('check-project-owner',['except'=>['index', 'store','show','indexMembers', 'all']]);
+        $this->middleware('check-project-permission',['except'=>['index','store','update','destroy', 'indexMembers','all']]);
     }
     /**
      * Display a listing of the resource.
@@ -26,12 +26,17 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
-        return $this->service->all($request->query->get('limit'));
+        return $this->service->index($request->query->get('limit'));
     }
 
-    public function allMembers(Request $request)
+    public function indexMembers(Request $request)
     {
-        return $this->service->allMember($request->query->get('limit'));
+        return $this->service->indexMember($request->query->get('limit'));
+    }
+
+    public function all(Request $request)
+    {
+        return $this->service->all();
     }
 
     /**
