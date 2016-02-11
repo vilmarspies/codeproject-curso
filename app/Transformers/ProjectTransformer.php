@@ -27,6 +27,7 @@ class ProjectTransformer extends TransformerAbstract
 			],
 			'description' => $project->description,
 			'progress' => (int) $project->progress,
+			'progress_expected' => $this->progressExpected($project),
 			'status' => $project->status,
 			'due_date' => $project->due_date,
 			'is_member' => $project->owner_id != Authorizer::getResourceOwnerId(),
@@ -68,5 +69,18 @@ class ProjectTransformer extends TransformerAbstract
 		}
 
 		return $opens;
+	}
+
+	private function progressExpected(Project $project)
+	{
+		$expected = 0;
+		foreach ($project->tasks as $task) {
+			//dd($task);
+			if ($task->due_date <= date('Y-m-d'))
+				$expected +=1;
+		}
+		if ($expected > 0)
+			return round($expected * 100 / count($project->tasks));
+		return 0;
 	}
 }
