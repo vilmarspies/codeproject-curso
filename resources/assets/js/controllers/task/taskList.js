@@ -8,6 +8,7 @@ angular.module('app.controllers')
 		$scope.save = function () {
 			if($scope.formTask.$valid){
 				$scope.task.status = appConfig.task.status[0].value;
+				$scope.task.start_date = new Date();
 				$scope.task.$save({id: $routeParams.id}).then(function(data){
 					$scope.task = new ProjectTask();
 					$scope.loadTask();

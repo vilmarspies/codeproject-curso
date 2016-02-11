@@ -61,9 +61,9 @@ angular.module('app.controllers')
 
 		$scope.updateTask = function (task) {
 			task.status = 3;
-			task.due_date = new Date();
-			ProjectTask.update({id:task.project_id, taskId:task.id}, task, function(){
-				//$location.path('/project/'+ $scope.task.project_id + '/tasks');
+			ProjectTask.update({id:task.project_id, taskId:task.id}, task, function(data){
+				console.log(data);
+				$scope.project.progress = data.project.progress;
 			});
 			
 		};

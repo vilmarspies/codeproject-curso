@@ -37,7 +37,7 @@ class Project extends Model  implements Transformable
 
     public function tasks()
     {
-        return $this->hasMany(ProjectTask::class);
+        return $this->hasMany(ProjectTask::class)->orderBy('id', 'desc');;
     }
 
     public function members()

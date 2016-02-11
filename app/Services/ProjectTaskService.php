@@ -2,6 +2,7 @@
 	namespace CodeProject\Services;
 
 use CodeProject\Repositories\IProjectTaskRepository;
+use CodeProject\Repositories\IProjectRepository;
 use CodeProject\Validators\ProjectTaskValidator;
 use Prettus\Validator\Exceptions\ValidatorException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -26,8 +27,9 @@ class ProjectTaskService
 	/**
 	*
 	*/
-	function __construct(IProjectTaskRepository $repository,  ProjectTaskValidator $validator) {
+	function __construct(IProjectTaskRepository $repository, IProjectRepository $projectRepository,  ProjectTaskValidator $validator) {
 		$this->repository = $repository;
+		$this->projectRepository = $projectRepository;
 		//$this->projectRepository = $projectRepository; IProjectRepository $projectRepository,
 		$this->validator = $validator;
 	}
@@ -45,7 +47,12 @@ class ProjectTaskService
 /*			$project = $this->projectRepository->skipPresenter()->find($data['project_id']);
 			$projectTask = $project->tasks()->crate($data);
 			return $projectTask;*/
-			return $this->repository->create($data);
+			$task =  $this->repository->skipPresenter()->create($data);
+			
+			$this->updateProgressProject($task);
+			
+
+			return $task;
 		} catch (ValidatorException $e) {
 			return [
 				'error' => true,
@@ -59,7 +66,11 @@ class ProjectTaskService
 	{
 		try {
 			$this->validator->with($data)->passesOrFail();
-			return $this->repository->update($data, $taskId);
+			$task = $this->repository->skipPresenter()->update($data, $taskId);
+			
+			$this->updateProgressProject($task);
+
+			return $task;
 		} catch (ValidatorException $e) {
 			return [
 				'error' => true,
@@ -93,6 +104,25 @@ class ProjectTaskService
     	} catch (ModelNotFoundException $e) {
     		return [ 'error' => true,'message' => 'Tarefa não encontrada.'];
     	}
-        
+    }
+
+    private function updateProgressProject($task){
+    	
+    	$project = $task->project;
+		$ttlTasks = count($project->tasks);
+		//$completed = count($this->getComplete($project->id));
+
+		$completed = $this->getComplete($project->id);
+
+		$progress = ($completed*100)/$ttlTasks;
+		$project->progress = round($progress);
+
+		$project->save();
+    }
+
+    private function getComplete($id)
+    {
+    	//return $this->repository->skipPresenter()->findWhere(['project_id'=>$id,'status'=>3);
+    	return $this->repository->skipPresenter()->findWhere(['project_id'=>$id,'status'=>3])->count();
     }
 }
