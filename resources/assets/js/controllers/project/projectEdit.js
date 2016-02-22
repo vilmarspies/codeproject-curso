@@ -38,7 +38,7 @@ angular.module('app.controllers')
 		};
 
 		$scope.getClients = function(name) {
-			return  Client.query({
+			return  Client.search({
 				search: name,
 				searchFields:'name:like'
 			}).$promise;

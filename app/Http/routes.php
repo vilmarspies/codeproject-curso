@@ -21,7 +21,9 @@ Route::post('oauth/access_token',function(){
 
 Route::group(['middleware'=>'oauth'], function ()
 {
+	Route::get('client/search', 'ClientController@searchClients');
 	Route::resource('client', 'ClientController', ['except' =>['create','edit']]);
+
 
 	//Route::group(['middleware'=>'isOwnerProject'], function(){
 		Route::get('project/projectmembers','ProjectController@indexMembers');

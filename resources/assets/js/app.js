@@ -3,7 +3,7 @@ var app = angular.module('app', ['ngRoute','angular-oauth2',
 									'ui.bootstrap.typeahead', 'ui.bootstrap.datepicker', 'ui.bootstrap.tpls', 'ui.bootstrap.modal', 
 									'ui.bootstrap.dropdown',
 									'ngFileUpload', 'http-auth-interceptor', 'angularUtils.directives.dirPagination',
-									'mgcrea.ngStrap.navbar',
+									'mgcrea.ngStrap.navbar','pusher-angular','ui-notification'
 ]);
 
 angular.module('app.controllers', ['ngMessages', 'angular-oauth2']);
@@ -14,6 +14,7 @@ angular.module('app.services', ['ngResource']);
 app.provider('appConfig', ['$httpParamSerializerProvider', function($httpParamSerializerProvider){
 	var config = {
 		baseUrl: 'http://codeproject.curso',
+		pusherKey: 'dfd8ae8734271654e59d',
 		project: {
 			status: [
 				{value: 1, label:'Não Iniciado'},
@@ -254,8 +255,47 @@ app.config(['$routeProvider', '$httpProvider', 'OAuthProvider', 'OAuthTokenProvi
 	    });
 }]);
 
-app.run(['$rootScope', '$location', '$http', '$cookies', '$modal', 'httpBuffer', 'OAuth', 
-	function($rootScope, $location, $http, $cookies, $modal, httpBuffer, OAuth) {
+app.run(['$rootScope', '$location', '$http', '$cookies', '$modal', '$pusher', 'httpBuffer', 'OAuth', 'appConfig', 'Notification',
+	function($rootScope, $location, $http, $cookies, $modal, $pusher, httpBuffer, OAuth, appConfig, Notification) {
+
+	$rootScope.$on('pusher-build',function(event, data){
+		if(data.next.$$route.originalPath != '/login'){
+			if (OAuth.isAuthenticated()){
+				if (!window.client){
+					window.client = new Pusher(appConfig.pusherKey);
+					var pusher = $pusher(window.client);
+					var channel = pusher.subscribe('user.'+$cookies.getObject('user').id);
+					channel.bind('CodeProject\\Events\\TaskWasIncluded',
+					  function(data) {
+					  	var name = data.task.name;
+					  	var dataInicio = data.task.start_date?moment(data.task.start_date).format('DD/MM/YYYY'):"Não Informado";
+					    Notification.success('Tarefa: <strong>' + name + '</strong> foi incluída!<br> Data de Inicio: '+dataInicio);
+					  }
+					);
+					channel.bind('CodeProject\\Events\\TaskWasUpdated',
+					  function(data) {
+					  	var name = data.task.name;
+					  	var dataInicio = data.task.start_date?moment(data.task.start_date).format('DD/MM/YYYY'):"Não Informado";
+					  	if (data.task.status != 3)
+					    	Notification.info('Tarefa: <strong>' + name + '</strong> foi alterada!<br> Data de Inicio: '+dataInicio);
+					    else
+					    	Notification('Tarefa: <strong>' + name + '</strong> foi Concluída!');
+					  }
+
+					);
+				}
+			}
+		}
+	});
+
+	$rootScope.$on('pusher-destroy',function(event, data){
+		if(data.next.$$route.originalPath == '/login'){
+			if (window.client){
+				window.client.disconect();
+				window.client = null;
+			}
+		}
+	});
 	//AUTORIZAÇÃO
 	$rootScope.$on('$routeChangeStart',function(event,next,current){
 		if(next.$$route.originalPath != '/login'){
@@ -263,6 +303,9 @@ app.run(['$rootScope', '$location', '$http', '$cookies', '$modal', 'httpBuffer',
 				$location.path('login');
 			}
 		}
+
+		$rootScope.$emit('pusher-build', {next:next});
+		$rootScope.$emit('pusher-destroy', {next:next});
 	});
 
 	$rootScope.$on('$routeChangeSuccess', function(event, current, previous){

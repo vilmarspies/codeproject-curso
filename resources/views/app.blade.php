@@ -10,6 +10,7 @@
 		
 		<link rel="stylesheet" type="text/css" href="{{asset('build/assets/css/flaticon.css')}}">
 		<link rel="stylesheet" type="text/css" href="{{asset('build/assets/css/font-awesome.css')}}">
+		<link rel="stylesheet" type="text/css" href="{{asset('build/assets/css/vendor/angular-ui-notification.min.css')}}">
 		<link rel="stylesheet" type="text/css" href="{{asset('build/assets/css/components.css')}}">
 		<link rel="stylesheet" type="text/css" href="{{asset('build/assets/css/app.css')}}">
 	@else
@@ -61,6 +62,9 @@
 			<script type="text/javascript" src="{{asset('build/assets/js/vendor/dirPagination.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/vendor/moment-with-locales.min.js')}}"></script>
 			<script type="text/javascript" src="{{asset('build/assets/js/vendor/lodash.min.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/vendor/pusher.min.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/vendor/pusher-angular.min.js')}}"></script>
+			<script type="text/javascript" src="{{asset('build/assets/js/vendor/angular-ui-notification.min.js')}}"></script>
 
 			<script type="text/javascript" src="{{asset('build/assets/js/app.js')}}"></script>
 			
@@ -133,5 +137,6 @@
 	@else
 		<script type="text/javascript" src="{{elixir('assets/js/all.js')}}"></script>
 	@endif
+
 </body>
 </html>

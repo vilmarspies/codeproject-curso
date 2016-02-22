@@ -24,7 +24,7 @@ class ProjectService
 
 
     private $userId;
-
+ 
 	/**
 	*
 	*/
@@ -211,7 +211,7 @@ class ProjectService
             return true;
         return false;
     }
-
+ 
     private function checkMemberId($memberId)
     {
         if(is_null($memberId) or $memberId == '' or $memberId == '0')

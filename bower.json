@@ -33,6 +33,9 @@
     "angular-http-auth": "~1.2.3",
     "angularUtils-pagination": "angular-utils-pagination#~0.9.3",
     "moment": "~2.11.1",
-    "lodash": "^4.2.0"
+    "lodash": "^4.2.0",
+    "pusher": "^3.0.0",
+    "pusher-angular": "^0.1.9",
+    "angular-ui-notification": "^0.1.0"
   }
 }

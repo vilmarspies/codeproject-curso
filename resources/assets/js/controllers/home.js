@@ -1,7 +1,9 @@
 angular.module('app.controllers')
-	.controller('HomeController', ['$scope','$cookies','Project', 'appConfig', function($scope, $cookies, Project, appConfig){
+	.controller('HomeController', ['$scope','$cookies','$timeout', '$pusher','Project', 'appConfig', 
+		function($scope, $cookies, $timeout, $pusher, Project, appConfig){
 		$scope.project = {};
 		$scope.projects = [];
+		$scope.tasks = [];
 		$scope.projectsSelected = [];
 		$scope.status = appConfig.project.status;
 		$scope.grade = true;
@@ -15,6 +17,33 @@ angular.module('app.controllers')
 			$scope.projectsSelected = data.data;
 			$scope.projects = data.data;
 		});
+
+		var pusher = $pusher(window.client);
+		var channel = pusher.subscribe('user.'+$cookies.getObject('user').id);
+		channel.bind('CodeProject\\Events\\TaskWasIncluded',
+		  function(data) {
+		  		if ($scope.tasks.length == 6){
+		  			$scope.tasks.slice($scope.tasks.length-1,1);
+		  		}
+		  		$timeout(function(){
+		  			$scope.tasks.unshift(data.task);
+		  			
+		  		},300);
+		  }
+		);
+
+		channel.bind('CodeProject\\Events\\TaskWasUpdated',
+		  function(data) {
+		  		if ($scope.tasks.length == 6){
+		  			$scope.tasks.slice($scope.tasks.length-1,1);
+		  		}
+		  		$timeout(function(){
+		  			$scope.tasks.unshift(data.task);
+		  			
+		  		},300);
+		  }
+		);
+
 
 		$scope.changed = function(){
 			$scope.projectsSelected = [];

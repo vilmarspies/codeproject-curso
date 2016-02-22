@@ -30,7 +30,11 @@ configCode.vendor_path_js = [
 	configCode.bower_path + '/angular-http-auth/src/http-auth-interceptor.js',
 	configCode.bower_path + '/angularUtils-pagination/dirPagination.js',
 	configCode.bower_path + '/moment/min/moment-with-locales.min.js',
-	configCode.bower_path + '/lodash/dist/lodash.min.js'
+	configCode.bower_path + '/lodash/dist/lodash.min.js',
+	configCode.bower_path + '/pusher/dist/pusher.min.js',
+	configCode.bower_path + '/pusher-angular/lib/pusher-angular.min.js',
+	configCode.bower_path + '/angular-ui-notification/dist/angular-ui-notification.min.js',
+
 ];
 
 configCode.build_path_css = configCode.build_path+'/css';
@@ -39,6 +43,7 @@ configCode.vendor_path_css = [
 	configCode.bower_path + '/bootstrap/dist/css/bootstrap.min.css',
 	configCode.bower_path + '/bootstrap/dist/css/bootstrap-theme.min.css',
 	configCode.bower_path + '/font-awesome/css/font-awesome.min.css',
+	configCode.bower_path + '/angular-ui-notification/dist/angular-ui-notification.min.css',
 ];
 
 configCode.build_path_html = configCode.build_path + '/views';

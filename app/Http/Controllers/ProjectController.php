@@ -17,7 +17,7 @@ class ProjectController extends Controller
     function __construct(ProjectService $service) {
         $this->service = $service;
         $this->middleware('check-project-owner',['except'=>['index', 'store','show','indexMembers', 'all']]);
-        $this->middleware('check-project-permission',['except'=>['index','store','update','destroy', 'indexMembers','all']]);
+        $this->middleware('check-project-permission',['except'=>['index','update', 'indexMembers','all']]);
     }
     /**
      * Display a listing of the resource.

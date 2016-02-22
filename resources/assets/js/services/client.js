@@ -6,6 +6,11 @@ angular.module('app.services')
 			},
 			query:{
 				isArray: false
+			},
+			search:{
+				url: appConfig.baseUrl + '/client/search',
+				method:'GET',
+				isArray:true
 			}
 		});
 	}]);	

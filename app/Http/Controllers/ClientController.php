@@ -28,7 +28,12 @@ class ClientController extends Controller
     public function index(Request $request)
     {
         $limit = $request->query->get('limit', 15);
-        return $this->service->paginate($limit);
+        return $this->service->paginate($limit); 
+    }
+
+    public function searchClients(Request $request)
+    {
+        return $this->service->all(); 
     }
 
 
